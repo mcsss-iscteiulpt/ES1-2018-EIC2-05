@@ -1,5 +1,9 @@
 package project.gui;
 
-public class Gui {
+import java.awt.Frame;
 
+public class Gui {
+	
+	private Frame frame;
+	
 }
