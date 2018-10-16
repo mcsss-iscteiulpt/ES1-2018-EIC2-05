@@ -6,4 +6,8 @@ public class Gui {
 	
 	private Frame frame;
 	
+	public Gui()	{
+		
+	}
+	
 }
