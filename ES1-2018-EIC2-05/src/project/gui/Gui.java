@@ -27,10 +27,21 @@ public class Gui {
 
 	public void addContent() {
 		frame.setLayout(new BorderLayout());
-		JLabel bda=new JLabel(new ImageIcon("Imgs/BDALogo.png"));
-		frame.add(bda,BorderLayout.NORTH);
-	  
-	    
+		JLabel bda = new JLabel(new ImageIcon("Imgs/BDALogo.png"));
+		frame.add(bda, BorderLayout.NORTH);
+
+		JMenuBar menuBar = new JMenuBar();
+		JMenu fileMenu = new JMenu("File");
+		JMenu imgMenu = new JMenu("Image");
+		JMenu helpMenu = new JMenu("Help");
+
+		menuBar.add(fileMenu);
+		menuBar.add(imgMenu);
+		menuBar.add(helpMenu);
+
+		
+		frame.add(bda, BorderLayout.PAGE_END);
+		frame.add(menuBar,BorderLayout.PAGE_START);
 
 	}
 
