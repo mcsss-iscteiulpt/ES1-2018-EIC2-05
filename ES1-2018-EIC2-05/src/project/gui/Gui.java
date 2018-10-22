@@ -28,20 +28,66 @@ public class Gui {
 	public void addContent() {
 		frame.setLayout(new BorderLayout());
 		JLabel bda = new JLabel(new ImageIcon("Imgs/BDALogo.png"));
-		frame.add(bda, BorderLayout.NORTH);
 
 		JMenuBar menuBar = new JMenuBar();
-		JMenu fileMenu = new JMenu("File");
-		JMenu imgMenu = new JMenu("Image");
-		JMenu helpMenu = new JMenu("Help");
+		JMenu apisMenu = new JMenu("APIS");
+		JMenu timeLineMenu = new JMenu("TimeLine");
 
-		menuBar.add(fileMenu);
-		menuBar.add(imgMenu);
-		menuBar.add(helpMenu);
+		JMenuItem twitterSubmenu = new JMenuItem("Twitter");
+		JMenuItem mailSubmenu = new JMenuItem("Mail");
+		JMenuItem facebookSubmenu = new JMenuItem("Facebook");
 
-		
+		JMenuItem hourSubmenu = new JMenuItem("Every Hour");
+		JMenuItem twentyFourhSubmenu = new JMenuItem("24 Hours");
+		JMenuItem weekSubmenu = new JMenuItem("Week");
+		JMenuItem mounthSubmenu = new JMenuItem("Mounth");
+
+		apisMenu.add(twitterSubmenu);
+		apisMenu.add(mailSubmenu);
+		apisMenu.add(facebookSubmenu);
+
+		timeLineMenu.add(hourSubmenu);
+		timeLineMenu.add(twentyFourhSubmenu);
+		timeLineMenu.add(weekSubmenu);
+		timeLineMenu.add(mounthSubmenu);
+
+		menuBar.add(apisMenu);
+		menuBar.add(timeLineMenu);
+
+		JPanel centerPanel = new JPanel();
+
+		String[] columnNames = { "API", "Time", "Content", "User" };
+		Object[][] data = { { "Facebook", "12:44", "---------", "User1" },
+				{ "Twitter", "02:04", "---------", "User12" }, { "Gmail", "22:49", "---------", "User31" },
+				{ "Facebook", "12:44", "---------", "User1" }, { "Twitter", "02:04", "---------", "User12" },
+				{ "Gmail", "22:49", "---------", "User31" }, { "Facebook", "12:44", "---------", "User1" },
+				{ "Twitter", "02:04", "---------", "User12" }, { "Gmail", "22:49", "---------", "User31" },
+				{ "Facebook", "12:44", "---------", "User1" }, { "Twitter", "02:04", "---------", "User12" },
+				{ "Gmail", "22:49", "---------", "User31" }, { "Facebook", "12:44", "---------", "User1" },
+				{ "Twitter", "02:04", "---------", "User12" }, { "Gmail", "22:49", "---------", "User31" },
+				{ "Facebook", "12:44", "---------", "User1" }, { "Twitter", "02:04", "---------", "User12" },
+				{ "Gmail", "22:49", "---------", "User31" }, { "Facebook", "12:44", "---------", "User1" },
+				{ "Twitter", "02:04", "---------", "User12" }, { "Gmail", "22:49", "---------", "User31" },
+				{ "Facebook", "12:44", "---------", "User1" }, { "Twitter", "02:04", "---------", "User12" },
+				{ "Gmail", "22:49", "---------", "User31" }, { "Facebook", "12:44", "---------", "User1" },
+				{ "Twitter", "02:04", "---------", "User12" }, { "Gmail", "22:49", "---------", "User31" },
+				{ "Facebook", "12:44", "---------", "User1" }, { "Twitter", "02:04", "---------", "User12" },
+				{ "Gmail", "22:49", "---------", "User31" }, { "Facebook", "12:44", "---------", "User1" },
+				{ "Twitter", "02:04", "---------", "User12" }, { "Gmail", "22:49", "---------", "User31" },
+				{ "Facebook", "12:44", "---------", "User1" }, { "Twitter", "02:04", "---------", "User12" },
+				{ "Gmail", "22:49", "---------", "User31" }, };
+
+		JTable table = new JTable(data, columnNames);
+		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
+		table.setFillsViewportHeight(true);
+
+		JScrollPane scrollPanel = new JScrollPane(table);
+
+		centerPanel.add(scrollPanel);
+
 		frame.add(bda, BorderLayout.PAGE_END);
-		frame.add(menuBar,BorderLayout.PAGE_START);
+		frame.add(menuBar, BorderLayout.PAGE_START);
+		frame.add(centerPanel, BorderLayout.CENTER);
 
 	}
 
