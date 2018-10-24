@@ -3,12 +3,14 @@ package project.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 public class Gui {
 
-	private JFrame frame;
+	protected JFrame frame;
 
 	public Gui(String frameTitle) {
 		frame = new JFrame(frameTitle);
@@ -30,13 +32,62 @@ public class Gui {
 		JLabel bda = new JLabel(new ImageIcon("Imgs/BDALogo.png"));
 
 		JMenuBar menuBar = new JMenuBar();
+		
 		JMenu apisMenu = new JMenu("APIS");
 		JMenu timeLineMenu = new JMenu("TimeLine");
+		JMenu searchMenu = new JMenu("Search");
+
+		
 
 		JMenuItem twitterSubmenu = new JMenuItem("Twitter");
+		twitterSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SubGui twitterGui=new SubGui("BDA(BOM DIA ACADEMIA)");
+				twitterGui.addContent("Twitter");
+				twitterGui.open();
+			}
+		});
+		
+		
+		
 		JMenuItem mailSubmenu = new JMenuItem("Mail");
+		mailSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SubGui mailGui=new SubGui("BDA(BOM DIA ACADEMIA)");
+				mailGui.addContent("Mail");
+				mailGui.open();
+			}
+		});
+		
+	
 		JMenuItem facebookSubmenu = new JMenuItem("Facebook");
+		facebookSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SubGui facebookGui=new SubGui("BDA(BOM DIA ACADEMIA)");
+				facebookGui.addContent("Facebook");
+				facebookGui.open();
+			}
+		});
+		
 
+		JMenuItem filterSubmenu = new JMenuItem("Choose you filter!!!");
+		filterSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SearchGui searchGui=new SearchGui("BDA(BOM DIA ACADEMIA)");
+				searchGui.addContent();
+				searchGui.open();
+			}
+		});
+		
+		
 		JMenuItem hourSubmenu = new JMenuItem("Every Hour");
 		JMenuItem twentyFourhSubmenu = new JMenuItem("24 Hours");
 		JMenuItem weekSubmenu = new JMenuItem("Week");
@@ -50,9 +101,12 @@ public class Gui {
 		timeLineMenu.add(twentyFourhSubmenu);
 		timeLineMenu.add(weekSubmenu);
 		timeLineMenu.add(mounthSubmenu);
+		
+		searchMenu.add(filterSubmenu);
 
 		menuBar.add(apisMenu);
 		menuBar.add(timeLineMenu);
+		menuBar.add(searchMenu);
 
 		JPanel centerPanel = new JPanel();
 
@@ -97,7 +151,6 @@ public class Gui {
 
 	public static void main(String[] args) {
 		Gui gui = new Gui("BDA(BOM DIA ACADEMIA)");
-		gui.addContent();
 		gui.open();
 	}
 }
