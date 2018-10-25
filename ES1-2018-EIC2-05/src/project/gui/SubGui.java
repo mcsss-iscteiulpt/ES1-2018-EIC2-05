@@ -21,7 +21,12 @@ public class SubGui extends Gui {
 		super(frameTitle);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
-
+	
+	
+	/**
+	 * GUI de cada interface
+	 * @param nameOfAPI
+	 */
 	public void addContent(String nameOfAPI) {
 		frame.remove(frame);
 		frame.setLayout(new BorderLayout());

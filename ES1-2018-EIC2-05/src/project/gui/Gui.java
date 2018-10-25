@@ -15,6 +15,12 @@ public class Gui {
 	protected JFrame frame;
 	protected twitterTimeline twitterTimeline;
 
+	
+	/**
+	 * construtor da GUI
+	 * 
+	 * @param frameTitle
+	 */
 	public Gui(String frameTitle) {
 		frame = new JFrame(frameTitle);
 		frame.setSize(900, 600);
@@ -30,7 +36,14 @@ public class Gui {
 	public JFrame getFrame() {
 		return frame;
 	}
-
+	
+	/**
+	 * conteudo da GUI:
+	 * timeline de todas as interfaces
+	 * menu para escolher qual interface mostrar
+	 * filtro para a timeline (não operacional)
+	 * botao de search para pesquisar as publicações com aquela palavra chave(não operacional)
+	 */
 	public void addContent() {
 		frame.setLayout(new BorderLayout());
 		JLabel bda = new JLabel(new ImageIcon("Imgs/BDALogo.png"));
@@ -127,10 +140,20 @@ public class Gui {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Devolve a timeline do twitter
+	 * 
+	 * @return timeline do twitter
+	 */
 	public twitterTimeline getTwitterTimeLine() {
 		return twitterTimeline;
 	}
 
+	/**
+	 * Para executar a GUI
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Gui gui = new Gui("BDA(BOM DIA ACADEMIA)");
 		gui.open();

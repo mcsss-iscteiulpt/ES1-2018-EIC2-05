@@ -25,6 +25,9 @@ public class SearchGui extends Gui {
 		addContent();
 	}
 
+	/**
+	 * Janela onde vamos pesquisar pela palavra chave que queremos
+	 */
 	public void addContent() {
 		frame.setLayout(new BorderLayout());
 

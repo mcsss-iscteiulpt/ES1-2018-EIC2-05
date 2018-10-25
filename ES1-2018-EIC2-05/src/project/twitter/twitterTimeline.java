@@ -1,6 +1,9 @@
 package project.twitter;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
+
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -10,7 +13,12 @@ public class twitterTimeline {
 
 	private int counter = 0;
 	private int counterTotal = 0;
-
+	
+	
+	/**
+	 * 
+	 * @return a matriz com os informações de cada tweet na sua respetiva caixa
+	 */
 	public Object[][] tweets() {
 
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -38,7 +46,7 @@ public class twitterTimeline {
 			int i = 0;
 			for (Status status : statuses) {
 				data[i][0] = "Twitter";
-				data[i][1] = (String.valueOf(status.getCreatedAt().getTime()));
+				data[i][1] = (convertTime(status.getCreatedAt().getTime()));
 				data[i][2] = (status.getText());
 				data[i][3] = (status.getUser().getName());
 
@@ -70,12 +78,27 @@ public class twitterTimeline {
 
 	}
 
-	public int getInitailCounter() {
-		return counter;
-	}
-
+	/**
+	 * 
+	 * @return o total de tweets na timeline
+	 */
 	public int getTotalCounter() {
 		return counterTotal;
+	}
+	
+	/**
+	 * Converte o tempo de publicação do tweet que está em millisegundos para o formato abaixo
+	 * 
+	 * @param time
+	 * @return o tempo da publicação do tweet no formato hh:mm MM/dd/yyyy
+	 */
+	private String convertTime(long time) {
+		
+		SimpleDateFormat convert = new SimpleDateFormat("hh:mm MM/dd/yyyy");
+		convert.setTimeZone(TimeZone.getTimeZone("GMT"));
+		String tweetTime = convert.format(time);
+		
+		return tweetTime;
 	}
 
 	public static void main(String[] args) {
