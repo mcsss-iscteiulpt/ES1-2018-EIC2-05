@@ -82,6 +82,12 @@ public class twitterTimeline {
 	 * 
 	 * @return o total de tweets na timeline
 	 */
+	
+	public int getInitialCounter() {
+		return counter;
+	}
+	
+	
 	public int getTotalCounter() {
 		return counterTotal;
 	}
