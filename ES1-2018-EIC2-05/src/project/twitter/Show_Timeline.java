@@ -1,5 +1,6 @@
 package project.twitter;
 
+import java.util.ArrayList;
 import java.util.List;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -31,12 +32,22 @@ public class Show_Timeline {
 			int counter=0;
 			int counterTotal = 0;
 			
+			List<String> nameUser = new ArrayList<String>();
+			List<String> contentTweet = new ArrayList<String>();
+			List<Long> timeTweet = new ArrayList<Long>();
+			
 			for (Status status : statuses) {
+				
+				nameUser.add(status.getUser().getName());
+				contentTweet.add(status.getText());
+				timeTweet.add(status.getCreatedAt().getTime());
 				// Filters only tweets from user "ISCTE"
-				if (status.getUser().getName() != null && status.getUser().getName().contains("ISCTE")) {
-					System.out.println(status.getUser().getName() + ":" + status.getText());
-					counter++;
-				}
+//				if (status.getUser().getName() != null && status.getUser().getName().contains("ISCTE")) {
+//					
+//					counter++;
+//				}
+				
+				System.out.println(status.getUser().getName() + ":" + status.getText() + " :" + status.getCreatedAt().getTime());
 				counterTotal++;
 			}
 			System.out.println("-------------\nNº of Results: " + counter+"/"+counterTotal);
