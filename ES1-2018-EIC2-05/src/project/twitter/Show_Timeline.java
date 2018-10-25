@@ -33,13 +33,13 @@ public class Show_Timeline {
 			int counterTotal = 0;
 			
 			List<String> nameUser = new ArrayList<String>();
-			List<String> contentTweet = new ArrayList<String>();
+			List<String> contentTweets = new ArrayList<String>();
 			List<Long> timeTweet = new ArrayList<Long>();
 			
 			for (Status status : statuses) {
 				
 				nameUser.add(status.getUser().getName());
-				contentTweet.add(status.getText());
+				contentTweets.add(status.getText());
 				timeTweet.add(status.getCreatedAt().getTime());
 				// Filters only tweets from user "ISCTE"
 //				if (status.getUser().getName() != null && status.getUser().getName().contains("ISCTE")) {
