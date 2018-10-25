@@ -12,6 +12,7 @@ public class Gui {
 
 	protected JFrame frame;
 
+
 	public Gui(String frameTitle) {
 		frame = new JFrame(frameTitle);
 		frame.setSize(900, 600);
@@ -142,6 +143,7 @@ public class Gui {
 		frame.add(bda, BorderLayout.PAGE_END);
 		frame.add(menuBar, BorderLayout.PAGE_START);
 		frame.add(centerPanel, BorderLayout.CENTER);
+		
 
 	}
 
