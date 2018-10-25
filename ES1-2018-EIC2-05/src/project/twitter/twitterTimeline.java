@@ -1,22 +1,27 @@
 package project.twitter;
 
-import java.util.ArrayList;
 import java.util.List;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
-public class Show_Timeline {
-
-	private ArrayList<String> nameUser = new ArrayList<String>();
-	private ArrayList<String> contentTweets = new ArrayList<String>();
-	private ArrayList<Long> timeTweet = new ArrayList<Long>();
+public class twitterTimeline {
 
 	private int counter = 0;
 	private int counterTotal = 0;
 
-	public void tweets() {
+	public Object[][] tweets() {
+
+		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, };
+
 		try {
 
 			ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -30,15 +35,14 @@ public class Show_Timeline {
 			List<Status> statuses = twitter.getHomeTimeline();
 			System.out.println("------------------------\n Showing home timeline \n------------------------");
 
-			List<String> nameUser = new ArrayList<String>();
-			List<String> contentTweets = new ArrayList<String>();
-			List<Long> timeTweet = new ArrayList<Long>();
-
+			int i = 0;
 			for (Status status : statuses) {
+				data[i][0] = "Twitter";
+				data[i][1] = (String.valueOf(status.getCreatedAt().getTime()));
+				data[i][2] = (status.getText());
+				data[i][3] = (status.getUser().getName());
 
-				nameUser.add(status.getUser().getName());
-				contentTweets.add(status.getText());
-				timeTweet.add(status.getCreatedAt().getTime());
+				i++;
 				// Filters only tweets from user "ISCTE"
 //				if (status.getUser().getName() != null && status.getUser().getName().contains("ISCTE")) {
 //					
@@ -48,25 +52,22 @@ public class Show_Timeline {
 				System.out.println(
 						status.getUser().getName() + ":" + status.getText() + " :" + status.getCreatedAt().getTime());
 				counterTotal++;
+
+				System.out.println(counterTotal);
+
 			}
 
 			// System.out.println("-------------\nNº of Results: " +
 			// counter+"/"+counterTotal);
-		} catch (Exception e) {
+
+		}
+
+		catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-	}
 
-	public ArrayList<String> getNameUserArray() {
-		return nameUser;
-	}
+		return data;
 
-	public ArrayList<String> getContentArray() {
-		return contentTweets;
-	}
-
-	public ArrayList<Long> getTimeArray() {
-		return timeTweet;
 	}
 
 	public int getInitailCounter() {
@@ -78,7 +79,7 @@ public class Show_Timeline {
 	}
 
 	public static void main(String[] args) {
-		Show_Timeline tweetTimeline = new Show_Timeline();
+		twitterTimeline tweetTimeline = new twitterTimeline();
 		tweetTimeline.tweets();
 	}
 

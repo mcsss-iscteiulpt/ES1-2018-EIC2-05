@@ -8,10 +8,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import project.twitter.twitterTimeline;
+
 public class Gui {
 
 	protected JFrame frame;
-
+	protected twitterTimeline twitterTimeline;
 
 	public Gui(String frameTitle) {
 		frame = new JFrame(frameTitle);
@@ -21,6 +23,7 @@ public class Gui {
 		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		twitterTimeline = new twitterTimeline();
 		addContent();
 	}
 
@@ -33,62 +36,55 @@ public class Gui {
 		JLabel bda = new JLabel(new ImageIcon("Imgs/BDALogo.png"));
 
 		JMenuBar menuBar = new JMenuBar();
-		
+
 		JMenu apisMenu = new JMenu("APIS");
 		JMenu timeLineMenu = new JMenu("TimeLine");
 		JMenu searchMenu = new JMenu("Search");
 
-		
-
 		JMenuItem twitterSubmenu = new JMenuItem("Twitter");
 		twitterSubmenu.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SubGui twitterGui=new SubGui("BDA(BOM DIA ACADEMIA)");
+				SubGui twitterGui = new SubGui("BDA(BOM DIA ACADEMIA)");
 				twitterGui.addContent("Twitter");
 				twitterGui.open();
 			}
 		});
-		
-		
-		
+
 		JMenuItem mailSubmenu = new JMenuItem("Mail");
 		mailSubmenu.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SubGui mailGui=new SubGui("BDA(BOM DIA ACADEMIA)");
+				SubGui mailGui = new SubGui("BDA(BOM DIA ACADEMIA)");
 				mailGui.addContent("Mail");
 				mailGui.open();
 			}
 		});
-		
-	
+
 		JMenuItem facebookSubmenu = new JMenuItem("Facebook");
 		facebookSubmenu.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SubGui facebookGui=new SubGui("BDA(BOM DIA ACADEMIA)");
+				SubGui facebookGui = new SubGui("BDA(BOM DIA ACADEMIA)");
 				facebookGui.addContent("Facebook");
 				facebookGui.open();
 			}
 		});
-		
 
 		JMenuItem filterSubmenu = new JMenuItem("Choose you filter!!!");
 		filterSubmenu.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SearchGui searchGui=new SearchGui("BDA(BOM DIA ACADEMIA)");
+				SearchGui searchGui = new SearchGui("BDA(BOM DIA ACADEMIA)");
 				searchGui.addContent();
 				searchGui.open();
 			}
 		});
-		
-		
+
 		JMenuItem hourSubmenu = new JMenuItem("Every Hour");
 		JMenuItem twentyFourhSubmenu = new JMenuItem("24 Hours");
 		JMenuItem weekSubmenu = new JMenuItem("Week");
@@ -102,7 +98,7 @@ public class Gui {
 		timeLineMenu.add(twentyFourhSubmenu);
 		timeLineMenu.add(weekSubmenu);
 		timeLineMenu.add(mounthSubmenu);
-		
+
 		searchMenu.add(filterSubmenu);
 
 		menuBar.add(apisMenu);
@@ -112,27 +108,8 @@ public class Gui {
 		JPanel centerPanel = new JPanel();
 
 		String[] columnNames = { "API", "Time", "Content", "User" };
-		Object[][] data = { { "Facebook", "12:44", "---------", "User1" },
-				{ "Twitter", "02:04", "---------", "User12" }, { "Gmail", "22:49", "---------", "User31" },
-				{ "Facebook", "12:44", "---------", "User1" }, { "Twitter", "02:04", "---------", "User12" },
-				{ "Gmail", "22:49", "---------", "User31" }, { "Facebook", "12:44", "---------", "User1" },
-				{ "Twitter", "02:04", "---------", "User12" }, { "Gmail", "22:49", "---------", "User31" },
-				{ "Facebook", "12:44", "---------", "User1" }, { "Twitter", "02:04", "---------", "User12" },
-				{ "Gmail", "22:49", "---------", "User31" }, { "Facebook", "12:44", "---------", "User1" },
-				{ "Twitter", "02:04", "---------", "User12" }, { "Gmail", "22:49", "---------", "User31" },
-				{ "Facebook", "12:44", "---------", "User1" }, { "Twitter", "02:04", "---------", "User12" },
-				{ "Gmail", "22:49", "---------", "User31" }, { "Facebook", "12:44", "---------", "User1" },
-				{ "Twitter", "02:04", "---------", "User12" }, { "Gmail", "22:49", "---------", "User31" },
-				{ "Facebook", "12:44", "---------", "User1" }, { "Twitter", "02:04", "---------", "User12" },
-				{ "Gmail", "22:49", "---------", "User31" }, { "Facebook", "12:44", "---------", "User1" },
-				{ "Twitter", "02:04", "---------", "User12" }, { "Gmail", "22:49", "---------", "User31" },
-				{ "Facebook", "12:44", "---------", "User1" }, { "Twitter", "02:04", "---------", "User12" },
-				{ "Gmail", "22:49", "---------", "User31" }, { "Facebook", "12:44", "---------", "User1" },
-				{ "Twitter", "02:04", "---------", "User12" }, { "Gmail", "22:49", "---------", "User31" },
-				{ "Facebook", "12:44", "---------", "User1" }, { "Twitter", "02:04", "---------", "User12" },
-				{ "Gmail", "22:49", "---------", "User31" }, };
 
-		JTable table = new JTable(data, columnNames);
+		JTable table = new JTable(twitterTimeline.tweets(), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
 		table.setFillsViewportHeight(true);
 
@@ -143,12 +120,15 @@ public class Gui {
 		frame.add(bda, BorderLayout.PAGE_END);
 		frame.add(menuBar, BorderLayout.PAGE_START);
 		frame.add(centerPanel, BorderLayout.CENTER);
-		
 
 	}
 
 	public void open() {
 		frame.setVisible(true);
+	}
+
+	public twitterTimeline getTwitterTimeLine() {
+		return twitterTimeline;
 	}
 
 	public static void main(String[] args) {
