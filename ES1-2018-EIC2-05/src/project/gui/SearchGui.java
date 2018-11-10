@@ -13,6 +13,7 @@ import javax.swing.WindowConstants;
 
 public class SearchGui extends Gui {
 
+	
 	public SearchGui(String frameTitle) {
 		super(frameTitle);
 		frame = new JFrame(frameTitle);
