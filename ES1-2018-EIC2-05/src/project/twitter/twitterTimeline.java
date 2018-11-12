@@ -13,8 +13,7 @@ public class twitterTimeline {
 
 	private int counter = 0;
 	private int counterTotal = 0;
-	
-	
+
 	/**
 	 * 
 	 * @return a matriz com os informações de cada tweet na sua respetiva caixa
@@ -27,8 +26,7 @@ public class twitterTimeline {
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, };
+				{ "", "", "", "" }, { "", "", "", "" } };
 
 		try {
 
@@ -82,28 +80,28 @@ public class twitterTimeline {
 	 * 
 	 * @return o total de tweets na timeline
 	 */
-	
+
 	public int getInitialCounter() {
 		return counter;
 	}
-	
-	
+
 	public int getTotalCounter() {
 		return counterTotal;
 	}
-	
+
 	/**
-	 * Converte o tempo de publicação do tweet que está em millisegundos para o formato abaixo
+	 * Converte o tempo de publicação do tweet que está em millisegundos para o
+	 * formato abaixo
 	 * 
 	 * @param time
 	 * @return o tempo da publicação do tweet no formato hh:mm MM/dd/yyyy
 	 */
 	private String convertTime(long time) {
-		
+
 		SimpleDateFormat convert = new SimpleDateFormat("hh:mm MM/dd/yyyy");
 		convert.setTimeZone(TimeZone.getTimeZone("GMT"));
 		String tweetTime = convert.format(time);
-		
+
 		return tweetTime;
 	}
 

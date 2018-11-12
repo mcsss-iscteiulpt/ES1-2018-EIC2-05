@@ -12,6 +12,9 @@ import project.twitter.twitterTimeline;
 
 public class Gui {
 
+	/**
+	 * 
+	 */
 	protected JFrame frame;
 	protected twitterTimeline twitterTimeline;
 
