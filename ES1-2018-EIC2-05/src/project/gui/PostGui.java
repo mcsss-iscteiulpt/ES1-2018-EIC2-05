@@ -5,16 +5,17 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-public class SearchGui extends MainGui {
 
-	
-	public SearchGui(String frameTitle) {
+public class PostGui extends MainGui {
+
+	public PostGui(String frameTitle) {
 		super(frameTitle);
 		frame = new JFrame(frameTitle);
 		frame.setSize(400, 100);
@@ -32,24 +33,27 @@ public class SearchGui extends MainGui {
 	public void addContent() {
 		frame.setLayout(new BorderLayout());
 
-		JTextField searchFiltrer = new JTextField();
+		JTextField tweetText = new JTextField();
 
-		JButton searchButton = new JButton("Search !!!");
+		JButton searchButton = new JButton("Post !!!");
 		searchButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Percorrer Conteúdo da jtable
+//fAZER O pOST				
+//				SendTweets senderOfTweet=new SendTweets();
+//				senderOfTweet.sendTweet(tweetText.getText());
+				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
 
-		frame.add(searchFiltrer, BorderLayout.CENTER);
+		frame.add(tweetText, BorderLayout.CENTER);
 		frame.add(searchButton, BorderLayout.PAGE_END);
 
 	}
 
 	public static void main(String[] args) {
-		SearchGui gui = new SearchGui("BDA(BOM DIA ACADEMIA)");
+		PostGui gui = new PostGui("BDA(BOM DIA ACADEMIA)");
 		gui.addContent();
 		gui.open();
 	}

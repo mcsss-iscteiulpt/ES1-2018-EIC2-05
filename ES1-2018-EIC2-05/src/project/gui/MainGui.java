@@ -8,23 +8,22 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import project.twitter.twitterTimeline;
+import project.twitter.TwitterTimeline;
 
-public class Gui {
+public class MainGui {
 
 	/**
 	 * 
 	 */
 	protected JFrame frame;
-	protected twitterTimeline twitterTimeline;
+	protected TwitterTimeline twitterTimeline;
 
-	
 	/**
 	 * construtor da GUI
 	 * 
 	 * @param frameTitle
 	 */
-	public Gui(String frameTitle) {
+	public MainGui(String frameTitle) {
 		frame = new JFrame(frameTitle);
 		frame.setSize(900, 600);
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -32,24 +31,22 @@ public class Gui {
 		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		twitterTimeline = new twitterTimeline();
+		twitterTimeline = new TwitterTimeline();
 		addContent();
 	}
 
 	public JFrame getFrame() {
 		return frame;
 	}
-	
+
 	/**
-	 * conteudo da GUI:
-	 * timeline de todas as interfaces
-	 * menu para escolher qual interface mostrar
-	 * filtro para a timeline (não operacional)
-	 * botao de search para pesquisar as publicações com aquela palavra chave(não operacional)
+	 * conteudo da GUI: timeline de todas as interfaces menu para escolher qual
+	 * interface mostrar filtro para a timeline (não operacional) botao de search
+	 * para pesquisar as publicações com aquela palavra chave(não operacional)
 	 */
 	public void addContent() {
 		frame.setLayout(new BorderLayout());
-		JLabel bda = new JLabel(new ImageIcon("Imgs/BDALogo.png"));
+		JLabel bda = new JLabel(new ImageIcon("Imgs/BDA_logo.png"));
 
 		JMenuBar menuBar = new JMenuBar();
 
@@ -62,7 +59,7 @@ public class Gui {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SubGui twitterGui = new SubGui("BDA(BOM DIA ACADEMIA)");
+				TwitterGui twitterGui = new TwitterGui("BDA(BOM DIA ACADEMIA)");
 				twitterGui.addContent("Twitter");
 				twitterGui.open();
 			}
@@ -73,9 +70,10 @@ public class Gui {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SubGui mailGui = new SubGui("BDA(BOM DIA ACADEMIA)");
-				mailGui.addContent("Mail");
-				mailGui.open();
+				GmailGui gmailGui = new GmailGui("BDA(BOM DIA ACADEMIA)");
+				gmailGui.addContent("Gmail");
+				gmailGui.open();
+
 			}
 		});
 
@@ -84,9 +82,10 @@ public class Gui {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SubGui facebookGui = new SubGui("BDA(BOM DIA ACADEMIA)");
+				FacebookGui facebookGui = new FacebookGui("BDA(BOM DIA ACADEMIA)");
 				facebookGui.addContent("Facebook");
 				facebookGui.open();
+
 			}
 		});
 
@@ -125,7 +124,7 @@ public class Gui {
 
 		String[] columnNames = { "API", "Time", "Content", "User" };
 
-		JTable table = new JTable(twitterTimeline.tweets(), columnNames);
+		JTable table = new JTable(twitterTimeline.tweetsInGeneral(), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
 		table.setFillsViewportHeight(true);
 
@@ -148,7 +147,7 @@ public class Gui {
 	 * 
 	 * @return timeline do twitter
 	 */
-	public twitterTimeline getTwitterTimeLine() {
+	public TwitterTimeline getTwitterTimeLine() {
 		return twitterTimeline;
 	}
 
@@ -158,7 +157,7 @@ public class Gui {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Gui gui = new Gui("BDA(BOM DIA ACADEMIA)");
+		MainGui gui = new MainGui("BDA(BOM DIA ACADEMIA)");
 		gui.open();
 	}
 }
