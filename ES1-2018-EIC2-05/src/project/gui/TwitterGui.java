@@ -19,7 +19,7 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 public class TwitterGui extends MainGui {
-
+	
 	public TwitterGui(String frameTitle) {
 		super(frameTitle);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -113,8 +113,8 @@ public class TwitterGui extends MainGui {
 
 		String[] columnNames = { "Time", "Content", "User" };
 
-		DefaultTableModel model = new DefaultTableModel(twitterTimeline.tweetsOnTwitterAPI(), columnNames);
-		JTable table = new JTable(twitterTimeline.tweetsOnTwitterAPI(), columnNames);
+		DefaultTableModel model = new DefaultTableModel(twitterHandler.tweetsOnTwitterAPI(), columnNames);
+		JTable table = new JTable(twitterHandler.tweetsOnTwitterAPI(), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
 		table.setFillsViewportHeight(true);
 
@@ -147,7 +147,7 @@ public class TwitterGui extends MainGui {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				table.setModel(model);
-				model.setDataVector(twitterTimeline.tweetsOnTwitterAPI(), columnNames);
+				model.setDataVector(twitterHandler.tweetsOnTwitterAPI(), columnNames);
 				table.repaint();
 
 			}

@@ -12,10 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import project.twitter.SendTweets;
-
 public class TweetGui extends MainGui {
-
+	
 	public TweetGui(String frameTitle) {
 		super(frameTitle);
 		frame = new JFrame(frameTitle);
@@ -41,8 +39,7 @@ public class TweetGui extends MainGui {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SendTweets senderOfTweet=new SendTweets();
-				senderOfTweet.sendTweet(tweetText.getText());
+				twitterHandler.sendTweet(tweetText.getText());
 				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
