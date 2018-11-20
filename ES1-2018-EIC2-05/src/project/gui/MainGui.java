@@ -8,15 +8,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import project.twitter.TwitterTimeline;
+import project.twitter.TwitterHandler;
 
 public class MainGui {
 
-	/**
-	 * 
-	 */
 	protected JFrame frame;
-	protected TwitterTimeline twitterTimeline;
+	protected static TwitterHandler twitterHandler;
 
 	/**
 	 * construtor da GUI
@@ -31,7 +28,7 @@ public class MainGui {
 		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		twitterTimeline = new TwitterTimeline();
+		twitterHandler = new TwitterHandler();
 		addContent();
 	}
 
@@ -124,7 +121,7 @@ public class MainGui {
 
 		String[] columnNames = { "API", "Time", "Content", "User" };
 
-		JTable table = new JTable(twitterTimeline.tweetsInGeneral(), columnNames);
+		JTable table = new JTable(twitterHandler.tweetsInGeneral(), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
 		table.setFillsViewportHeight(true);
 
@@ -138,17 +135,11 @@ public class MainGui {
 
 	}
 
+	/**
+	 * Torna a GUI visivel
+	 */
 	public void open() {
 		frame.setVisible(true);
-	}
-
-	/**
-	 * Devolve a timeline do twitter
-	 * 
-	 * @return timeline do twitter
-	 */
-	public TwitterTimeline getTwitterTimeLine() {
-		return twitterTimeline;
 	}
 
 	/**
