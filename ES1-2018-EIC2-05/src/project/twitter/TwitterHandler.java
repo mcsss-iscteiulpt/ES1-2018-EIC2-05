@@ -11,7 +11,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterHandler {
 
-	Twitter twitter;
+	private Twitter twitter;
 	
 	/**
 	 * Construtor da classe TwitterHandler:

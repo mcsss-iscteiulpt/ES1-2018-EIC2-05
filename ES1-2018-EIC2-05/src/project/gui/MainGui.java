@@ -8,12 +8,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import project.facebook.FacebookHandler;
 import project.twitter.TwitterHandler;
 
 public class MainGui {
 
 	protected JFrame frame;
 	protected static TwitterHandler twitterHandler;
+	protected static FacebookHandler facebookHandler;
 
 	/**
 	 * construtor da GUI
@@ -29,6 +31,7 @@ public class MainGui {
 		frame.setLocation(x, y);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		twitterHandler = new TwitterHandler();
+		facebookHandler = new FacebookHandler();
 		addContent();
 	}
 

@@ -110,15 +110,9 @@ public class FacebookGui extends MainGui {
 
 		JPanel centerPanel = new JPanel();
 
-//		String[] columnNames = { "Time", "Content", "User" };
+		String[] columnNames = { "Time", "Content", "User" };
 
-//		JTable table = new JTable(twitterTimeline.tweetsOnTwitterAPI(), columnNames);
-//		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
-//		table.setFillsViewportHeight(true);
-		
-		
-//Implementar Dados do face		
-		JTable table=new JTable();
+		JTable table = new JTable(facebookHandler.postsOnFacebookAPI(), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
 		table.setFillsViewportHeight(true);
 
