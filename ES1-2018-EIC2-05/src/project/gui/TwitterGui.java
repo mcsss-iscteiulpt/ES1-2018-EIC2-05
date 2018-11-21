@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,7 +21,7 @@ import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 public class TwitterGui extends MainGui {
-	
+
 	public TwitterGui(String frameTitle) {
 		super(frameTitle);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -55,54 +57,29 @@ public class TwitterGui extends MainGui {
 		JMenuItem twentyFourhSubmenu = new JMenuItem("24 Hours");
 		JMenuItem weekSubmenu = new JMenuItem("Week");
 		JMenuItem mounthSubmenu = new JMenuItem("Mounth");
+		JMenuItem allSubmenu=new JMenuItem("All");
 
-//		Date date=new Date(0);
-//		int hours=date.getHours();
-//		int day=date.getDay();
-//		int mounth=date.getMonth(); Ver método para obter data;
+		String actualTimeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
-		hourSubmenu.addActionListener(new ActionListener() {
+		String[] actualSplitTimeAndDate = actualTimeStamp.split(" ");
+		String actualDate = actualSplitTimeAndDate[0];
+		String actualTime = actualSplitTimeAndDate[1];
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// Ver como percorrer jtable
-				// if(hour==actualHour)
-				// showiT;
-				System.out.println("Current Hour");
-			}
-		});
+		String[] actualSplitDate = actualDate.split("/");
+		String actualMounth = actualSplitDate[1];
+		String actualYear=actualSplitDate[0];
+		Calendar cal = Calendar.getInstance();
+	    int actualWeek = cal.get(Calendar.WEEK_OF_YEAR);
+		String actualDay = actualSplitDate[2];
 
-		twentyFourhSubmenu.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("24 Hours");
-			}
-		});
-
-		weekSubmenu.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("Week");
-			}
-		});
-
-		mounthSubmenu.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("Month");
-			}
-		});
+		String[] actualSplitTime = actualTime.split(":");
+		String actualHour = actualSplitTime[0];
 
 		timeLineMenu.add(hourSubmenu);
 		timeLineMenu.add(twentyFourhSubmenu);
 		timeLineMenu.add(weekSubmenu);
 		timeLineMenu.add(mounthSubmenu);
+		timeLineMenu.add(allSubmenu);
 
 		searchMenu.add(filterSubmenu);
 
@@ -155,6 +132,57 @@ public class TwitterGui extends MainGui {
 
 		eastPanel.add(refreshButton);
 
+		hourSubmenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(twitterHandler.getTwittersOnThisHour(actualHour,actualDay,actualMounth,actualYear), columnNames);
+				table.repaint();
+
+			}
+		});
+
+		twentyFourhSubmenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(twitterHandler.getTwittersOnThisDay(actualDay,actualMounth,actualYear), columnNames);
+				table.repaint();
+			}
+		});
+
+		weekSubmenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(twitterHandler.getTwittersOnThisWeek(actualWeek,actualMounth,actualYear), columnNames);
+				table.repaint();
+			}
+		});
+
+		mounthSubmenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(twitterHandler.getTwittersOnThisMounth(actualMounth,actualYear), columnNames);
+				table.repaint();
+			}
+		});
+		
+		allSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				table.setModel(model);
+				model.setDataVector(twitterHandler.tweetsOnTwitterAPI(), columnNames);
+				table.repaint();
+			}
+		});
+
 		frame.add(bda, BorderLayout.PAGE_END);
 		frame.add(menuBar, BorderLayout.PAGE_START);
 		frame.add(centerPanel, BorderLayout.CENTER);
@@ -167,6 +195,7 @@ public class TwitterGui extends MainGui {
 		TwitterGui gui = new TwitterGui("BDA(BOM DIA ACADEMIA)");
 		gui.addContent("Twitter");
 		gui.open();
+		
 	}
 
 }
