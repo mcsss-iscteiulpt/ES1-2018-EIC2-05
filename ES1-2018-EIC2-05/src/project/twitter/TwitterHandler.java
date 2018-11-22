@@ -90,7 +90,7 @@ public class TwitterHandler {
 		try {
 
 			List<Status> statuses = twitter.getHomeTimeline();
-
+			
 			int i = 0;
 			for (Status status : statuses) {
 				data[i][0] = (convertTime(status.getCreatedAt().getTime()));
@@ -98,7 +98,7 @@ public class TwitterHandler {
 				data[i][2] = (status.getUser().getName());
 
 				i++;
-
+				
 				System.out.println(
 						status.getUser().getName() + ":" + status.getText() + " :" + status.getCreatedAt().getTime());
 			}
