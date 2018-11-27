@@ -51,7 +51,6 @@ public class TweetGui extends MainGui {
 
 	public static void main(String[] args) {
 		TweetGui gui = new TweetGui("BDA(BOM DIA ACADEMIA)");
-		gui.addContent();
 		gui.open();
 	}
 

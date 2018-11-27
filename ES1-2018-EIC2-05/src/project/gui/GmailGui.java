@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,6 +18,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+
+import project.mail.ReceiverOfMails;
+
 
 
 public class GmailGui extends MainGui {
@@ -45,64 +51,42 @@ public class GmailGui extends MainGui {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SearchGui searchGui = new SearchGui("BDA(BOM DIA ACADEMIA)");
+				SendMailGui searchGui = new SendMailGui("BDA(BOM DIA ACADEMIA)");
 				searchGui.addContent();
 				searchGui.open();
 			}
 		});
-
+		
+		
 		JMenuItem hourSubmenu = new JMenuItem("Every Hour");
 		JMenuItem twentyFourhSubmenu = new JMenuItem("24 Hours");
 		JMenuItem weekSubmenu = new JMenuItem("Week");
 		JMenuItem mounthSubmenu = new JMenuItem("Mounth");
+		JMenuItem allSubmenu=new JMenuItem("All");
+		
+		String actualTimeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+		
 
-//		Date date=new Date(0);
-//		int hours=date.getHours();
-//		int day=date.getDay();
-//		int mounth=date.getMonth(); Ver método para obter data;
+		String[] actualSplitTimeAndDate = actualTimeStamp.split(" ");
+		String actualDate = actualSplitTimeAndDate[0];
+		String actualTime = actualSplitTimeAndDate[1];
 
-		hourSubmenu.addActionListener(new ActionListener() {
+		String[] actualSplitDate = actualDate.split("/");
+		String actualMounth = actualSplitDate[1];
+		String actualYear=actualSplitDate[0];
+		Calendar cal = Calendar.getInstance();
+	    int actualWeek = cal.get(Calendar.WEEK_OF_YEAR);
+		String actualDay = actualSplitDate[2];
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// Ver como percorrer jtable
-				// if(hour==actualHour)
-				// showiT;
-				System.out.println("Current Hour");
-			}
-		});
-
-		twentyFourhSubmenu.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("24 Hours");
-			}
-		});
-
-		weekSubmenu.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("Week");
-			}
-		});
-
-		mounthSubmenu.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("Month");
-			}
-		});
+		String[] actualSplitTime = actualTime.split(":");
+		String actualHour = actualSplitTime[0];
+		
 
 		timeLineMenu.add(hourSubmenu);
 		timeLineMenu.add(twentyFourhSubmenu);
 		timeLineMenu.add(weekSubmenu);
 		timeLineMenu.add(mounthSubmenu);
+		timeLineMenu.add(allSubmenu);
 
 		searchMenu.add(filterSubmenu);
 
@@ -111,7 +95,12 @@ public class GmailGui extends MainGui {
 
 		JPanel centerPanel = new JPanel();
 
-		JTable table = new JTable();
+		String[] columnNames = { "Time", "Title", "Content","User" };
+
+		
+		ReceiverOfMails mailReceiveMails=new ReceiverOfMails();
+		DefaultTableModel model = new DefaultTableModel(mailReceiveMails.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15"), columnNames);
+		JTable table = new JTable(mailReceiveMails.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15"), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
 		table.setFillsViewportHeight(true);
 
@@ -130,7 +119,7 @@ public class GmailGui extends MainGui {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MailGui gui = new MailGui("BDA(BOM DIA ACADEMIA)");
+				SendMailGui gui = new SendMailGui("BDA(BOM DIA ACADEMIA)");
 				gui.addContent();
 				gui.open();
 			}
@@ -143,12 +132,65 @@ public class GmailGui extends MainGui {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				table.setModel(model);
+				model.setDataVector(mailReceiveMails.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15"), columnNames);
+				table.repaint();
 			}
 		});
 
 		eastPanel.add(refreshButton);
+		
+		hourSubmenu.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(mailReceiveMails.getMailsOnThisHour("es1.eic2.5@gmail.com", "MiguelNeto15",actualHour,actualDay,actualMounth,actualYear), columnNames);
+				table.repaint();
+			}
+		});
+
+		twentyFourhSubmenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(mailReceiveMails.getMailsOnThisDay("es1.eic2.5@gmail.com", "MiguelNeto15",actualDay,actualMounth,actualYear), columnNames);
+				table.repaint();
+			}
+		});
+
+		weekSubmenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(mailReceiveMails.getMailsOnThisWeek("es1.eic2.5@gmail.com", "MiguelNeto15",actualWeek,actualMounth,actualYear), columnNames);
+				table.repaint();
+			}
+		});
+
+		mounthSubmenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(mailReceiveMails.getMailsOnThisMounth("es1.eic2.5@gmail.com", "MiguelNeto15",actualMounth,actualYear), columnNames);
+				table.repaint();
+			}
+		});
+
+		allSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(mailReceiveMails.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15"), columnNames);
+				table.repaint();
+				
+			}
+		});
+		
 		frame.add(bda, BorderLayout.PAGE_END);
 		frame.add(menuBar, BorderLayout.PAGE_START);
 		frame.add(centerPanel, BorderLayout.CENTER);
@@ -156,10 +198,11 @@ public class GmailGui extends MainGui {
 		frame.add(eastPanel, BorderLayout.EAST);
 
 	}
-
+	
+	
 	public static void main(String[] args) {
 		GmailGui gui = new GmailGui("BDA(BOM DIA ACADEMIA)");
-		gui.addContent("Twitter");
+		gui.addContent("Gmail");
 		gui.open();
 	}
 

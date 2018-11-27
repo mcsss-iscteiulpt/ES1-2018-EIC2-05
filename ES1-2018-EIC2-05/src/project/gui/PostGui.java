@@ -35,20 +35,17 @@ public class PostGui extends MainGui {
 
 		JTextField tweetText = new JTextField();
 
-		JButton searchButton = new JButton("Post !!!");
-		searchButton.addActionListener(new ActionListener() {
+		JButton postButton = new JButton("Post !!!");
+		postButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//fAZER O pOST				
-//				SendTweets senderOfTweet=new SendTweets();
-//				senderOfTweet.sendTweet(tweetText.getText());
 				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
 
 		frame.add(tweetText, BorderLayout.CENTER);
-		frame.add(searchButton, BorderLayout.PAGE_END);
+		frame.add(postButton, BorderLayout.PAGE_END);
 
 	}
 

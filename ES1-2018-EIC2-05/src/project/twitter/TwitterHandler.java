@@ -39,13 +39,15 @@ public class TwitterHandler {
 	 */
 	public Object[][] tweetsInGeneral() {
 
-		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" } };
+		Object[][] data = { { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
+				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
+				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
+				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
+				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
+				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
+				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
+				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
+				{ "", "", "", "", "" }, };
 
 		try {
 
@@ -55,8 +57,9 @@ public class TwitterHandler {
 			for (Status status : statuses) {
 				data[i][0] = "Twitter";
 				data[i][1] = (convertTime(status.getCreatedAt().getTime()));
-				data[i][2] = (status.getText());
-				data[i][3] = (status.getUser().getName());
+				data[i][2] = "No title On Twitters";
+				data[i][3] = (status.getText());
+				data[i][4] = (status.getUser().getName());
 
 				i++;
 
@@ -90,7 +93,7 @@ public class TwitterHandler {
 		try {
 
 			List<Status> statuses = twitter.getHomeTimeline();
-			
+
 			int i = 0;
 			for (Status status : statuses) {
 				data[i][0] = (convertTime(status.getCreatedAt().getTime()));
@@ -98,7 +101,7 @@ public class TwitterHandler {
 				data[i][2] = (status.getUser().getName());
 
 				i++;
-				
+
 				System.out.println(
 						status.getUser().getName() + ":" + status.getText() + " :" + status.getCreatedAt().getTime());
 			}
@@ -327,6 +330,37 @@ public class TwitterHandler {
 					data[i][2] = (status.getUser().getName());
 				}
 				i++;
+			}
+		}
+
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		return data;
+	}
+
+	public Object[][] searchWordInTweet(String word) {
+		Object[][] data = { { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
+				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
+				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
+				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
+				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
+				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, };
+
+		try {
+
+			List<Status> statuses = twitter.getHomeTimeline();
+
+			int i = 0;
+			for (Status status : statuses) {
+				if (status.getText().contains(word)) {
+					data[i][0] = (convertTime(status.getCreatedAt().getTime()));
+					data[i][1] = (status.getText());
+					data[i][2] = (status.getUser().getName());
+				}
+				i++;
+
 			}
 		}
 

@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,9 +18,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+
+import project.facebook.FacebookAPI;
 
 public class FacebookGui extends MainGui {
 
+	
+	
 	public FacebookGui(String frameTitle) {
 		super(frameTitle);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -44,7 +51,7 @@ public class FacebookGui extends MainGui {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SearchGui searchGui = new SearchGui("BDA(BOM DIA ACADEMIA)");
+				SendMailGui searchGui = new SendMailGui("BDA(BOM DIA ACADEMIA)");
 				searchGui.addContent();
 				searchGui.open();
 			}
@@ -54,55 +61,33 @@ public class FacebookGui extends MainGui {
 		JMenuItem twentyFourhSubmenu = new JMenuItem("24 Hours");
 		JMenuItem weekSubmenu = new JMenuItem("Week");
 		JMenuItem mounthSubmenu = new JMenuItem("Mounth");
+		JMenuItem allSubmenu=new JMenuItem("All");
 		
-//		Date date=new Date(0);
-//		int hours=date.getHours();
-//		int day=date.getDay();
-//		int mounth=date.getMonth(); Ver método para obter data;
+		String actualTimeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+
+		String[] actualSplitTimeAndDate = actualTimeStamp.split(" ");
+		String actualDate = actualSplitTimeAndDate[0];
+		String actualTime = actualSplitTimeAndDate[1];
+
+		String[] actualSplitDate = actualDate.split("/");
+		String actualMounth = actualSplitDate[1];
+		String actualYear=actualSplitDate[0];
+		Calendar cal = Calendar.getInstance();
+	    int actualWeek = cal.get(Calendar.WEEK_OF_YEAR);
+		String actualDay = actualSplitDate[2];
+
+		String[] actualSplitTime = actualTime.split(":");
+		String actualHour = actualSplitTime[0];
 		
-		hourSubmenu.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				//Ver como percorrer jtable
-			//	if(hour==actualHour)
-			//	showiT;
-				System.out.println("Current Hour");
-			}
-		});
 		
-		twentyFourhSubmenu.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("24 Hours");
-			}
-		});
 		
-		weekSubmenu.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("Week");
-			}
-		});
-		
-		mounthSubmenu.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("Month");
-			}
-		});
 		
 		timeLineMenu.add(hourSubmenu);
 		timeLineMenu.add(twentyFourhSubmenu);
 		timeLineMenu.add(weekSubmenu);
 		timeLineMenu.add(mounthSubmenu);
-
+		timeLineMenu.add(allSubmenu);
+		
 		searchMenu.add(filterSubmenu);
 
 		menuBar.add(timeLineMenu);
@@ -110,17 +95,14 @@ public class FacebookGui extends MainGui {
 
 		JPanel centerPanel = new JPanel();
 
-//		String[] columnNames = { "Time", "Content", "User" };
+		String[] columnNames = { "Time", "Content", "User" };
 
-//		JTable table = new JTable(twitterTimeline.tweetsOnTwitterAPI(), columnNames);
-//		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
-//		table.setFillsViewportHeight(true);
-		
-		
-//Implementar Dados do face		
-		JTable table=new JTable();
+		FacebookAPI facebookAPI=new FacebookAPI();
+		DefaultTableModel model = new DefaultTableModel(facebookAPI.getPostsOnTheApi(), columnNames);
+		JTable table = new JTable(facebookAPI.getPostsOnTheApi(), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
 		table.setFillsViewportHeight(true);
+		
 
 		JScrollPane scrollPanel = new JScrollPane(table);
 
@@ -154,13 +136,64 @@ public class FacebookGui extends MainGui {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
-
+				table.setModel(model);
+				model.setDataVector(facebookAPI.getPostsOnTheApi(), columnNames);
+				table.repaint();
 			}
 		});
 
 		eastPanel.add(refreshButton);
+		
+hourSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(facebookAPI.getPostsOnThisHour(actualHour,actualDay,actualMounth,actualYear), columnNames);
+				table.repaint();
+
+			}
+		});
+		
+		twentyFourhSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(facebookAPI.getPostsOnThisDay(actualDay,actualMounth,actualYear), columnNames);
+				table.repaint();;
+			}
+		});
+		
+		weekSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(facebookAPI.getPostsOnThisWeek(actualWeek,actualMounth,actualYear), columnNames);
+				table.repaint();
+			}
+		});
+		
+		mounthSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				table.setModel(model);
+				model.setDataVector(facebookAPI.getPostsOnThisMounth(actualMounth,actualYear), columnNames);
+				table.repaint();
+			}
+		});
+		
+allSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				table.setModel(model);
+				model.setDataVector(facebookAPI.getPostsOnTheApi(), columnNames);
+				table.repaint();
+			}
+		});
 
 		frame.add(bda, BorderLayout.PAGE_END);
 		frame.add(menuBar, BorderLayout.PAGE_START);

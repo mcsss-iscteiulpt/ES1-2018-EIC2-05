@@ -5,14 +5,19 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+//import javax.swing.table.DefaultTableModel;
 
-public class SearchGui extends MainGui {
 
+
+public class SearchGui extends TwitterGui {
+	
 	
 	public SearchGui(String frameTitle) {
 		super(frameTitle);
@@ -23,34 +28,40 @@ public class SearchGui extends MainGui {
 		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		addContent();
+		addContentTable();
 	}
 
 	/**
 	 * Janela onde vamos pesquisar pela palavra chave que queremos
 	 */
-	public void addContent() {
+	public JTable addContentTable() {
 		frame.setLayout(new BorderLayout());
+		JTable t=new JTable();
 
-		JTextField searchFiltrer = new JTextField();
+		JTextField searchText = new JTextField();
 
 		JButton searchButton = new JButton("Search !!!");
 		searchButton.addActionListener(new ActionListener() {
-
+		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Percorrer Conteúdo da jtable
+//				String[] columnNames = { "Time", "Content", "User" };
+//				DefaultTableModel model = new DefaultTableModel(twitterHandler.tweetsOnTwitterAPI(), columnNames);
+//				t.setModel(model);
+//				model.setDataVector(twitterHandler.searchWordInTweet(searchText.getText()), columnNames);
+//				t.repaint();
+				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
 
-		frame.add(searchFiltrer, BorderLayout.CENTER);
+		frame.add(searchText, BorderLayout.CENTER);
 		frame.add(searchButton, BorderLayout.PAGE_END);
-
+		
+		return t;
 	}
 
 	public static void main(String[] args) {
 		SearchGui gui = new SearchGui("BDA(BOM DIA ACADEMIA)");
-		gui.addContent();
 		gui.open();
 	}
 

@@ -22,6 +22,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class TwitterGui extends MainGui {
 
+	JTable table;
+	
 	public TwitterGui(String frameTitle) {
 		super(frameTitle);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -43,15 +45,7 @@ public class TwitterGui extends MainGui {
 
 		JMenuItem filterSubmenu = new JMenuItem("Choose you filter!!!");
 
-		filterSubmenu.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				SearchGui searchGui = new SearchGui("BDA(BOM DIA ACADEMIA)");
-				searchGui.addContent();
-				searchGui.open();
-			}
-		});
+		
 
 		JMenuItem hourSubmenu = new JMenuItem("Every Hour");
 		JMenuItem twentyFourhSubmenu = new JMenuItem("24 Hours");
@@ -91,7 +85,7 @@ public class TwitterGui extends MainGui {
 		String[] columnNames = { "Time", "Content", "User" };
 
 		DefaultTableModel model = new DefaultTableModel(twitterHandler.tweetsOnTwitterAPI(), columnNames);
-		JTable table = new JTable(twitterHandler.tweetsOnTwitterAPI(), columnNames);
+		table = new JTable(twitterHandler.tweetsOnTwitterAPI(), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
 		table.setFillsViewportHeight(true);
 
@@ -182,6 +176,20 @@ public class TwitterGui extends MainGui {
 				table.repaint();
 			}
 		});
+		
+		filterSubmenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SearchGui searchGui = new SearchGui("BDA(BOM DIA ACADEMIA)");
+				searchGui.addContent();
+				searchGui.open();
+				JScrollPane scrollPanel = new JScrollPane(searchGui.addContentTable());
+
+				centerPanel.add(scrollPanel);
+				
+			}
+		});
 
 		frame.add(bda, BorderLayout.PAGE_END);
 		frame.add(menuBar, BorderLayout.PAGE_START);
@@ -189,6 +197,10 @@ public class TwitterGui extends MainGui {
 		frame.add(apiLabel, BorderLayout.WEST);
 		frame.add(eastPanel, BorderLayout.EAST);
 
+	}
+	
+	public JTable getJtable()	{
+		return table;
 	}
 
 	public static void main(String[] args) {

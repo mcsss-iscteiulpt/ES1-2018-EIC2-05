@@ -8,12 +8,20 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+
+import project.facebook.FacebookAPI;
+import project.mail.ReceiverOfMails;
 import project.twitter.TwitterHandler;
+
 
 public class MainGui {
 
 	protected JFrame frame;
 	protected static TwitterHandler twitterHandler;
+	protected static ReceiverOfMails mailHandler;
+	protected static FacebookAPI facebookHandler;
+	
+	
 
 	/**
 	 * construtor da GUI
@@ -91,7 +99,7 @@ public class MainGui {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SearchGui searchGui = new SearchGui("BDA(BOM DIA ACADEMIA)");
+				SendMailGui searchGui = new SendMailGui("BDA(BOM DIA ACADEMIA)");
 				searchGui.addContent();
 				searchGui.open();
 			}
@@ -119,10 +127,13 @@ public class MainGui {
 
 		JPanel centerPanel = new JPanel();
 
-		String[] columnNames = { "API", "Time", "Content", "User" };
+		String[] columnNames = { "API", "Time","Title", "Content", "User" };
 
-		JTable table = new JTable(twitterHandler.tweetsInGeneral(), columnNames);
-		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
+		
+//		JTable table = new JTable(allData(), columnNames);
+		AnalyseData analyseData=new AnalyseData();
+		JTable table = new JTable(analyseData.analyseData(), columnNames);
+		table.setPreferredScrollableViewportSize(new Dimension(800, 400));
 		table.setFillsViewportHeight(true);
 
 		JScrollPane scrollPanel = new JScrollPane(table);
@@ -142,6 +153,31 @@ public class MainGui {
 		frame.setVisible(true);
 	}
 
+	public Object[][] allData()	{
+		twitterHandler=new TwitterHandler();
+		mailHandler=new ReceiverOfMails();
+		facebookHandler=new FacebookAPI();
+		Object [][] data1=twitterHandler.tweetsInGeneral();
+		Object [][] data2=mailHandler.receiveMailsInGeneral("es1.eic2.5@gmail.com", "MiguelNeto15");
+		Object [][] data3=facebookHandler.getPostsInGeneral();
+		
+		Object[][] result1 = new Object[data1.length + data2.length][];
+
+		System.arraycopy(data1, 0, result1, 0, data1.length);
+		System.arraycopy(data2, 0, result1, data1.length, data2.length);
+		
+		
+		Object[][] result2 = new Object[result1.length + data3.length][];
+		
+		System.arraycopy(result1, 0, result2, 0, result1.length);
+		System.arraycopy(data3, 0, result2, result1.length, data3.length);
+		
+		
+		
+		return result2;
+	}
+	
+	
 	/**
 	 * Para executar a GUI
 	 * 
