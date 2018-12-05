@@ -5,9 +5,11 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.*;
-
+import javax.swing.table.DefaultTableModel;
 
 import project.facebook.FacebookAPI;
 import project.mail.ReceiverOfMails;
@@ -109,15 +111,35 @@ public class MainGui {
 		JMenuItem twentyFourhSubmenu = new JMenuItem("24 Hours");
 		JMenuItem weekSubmenu = new JMenuItem("Week");
 		JMenuItem mounthSubmenu = new JMenuItem("Mounth");
+		JMenuItem allSubMenu=new JMenuItem("All");
 
 		apisMenu.add(twitterSubmenu);
 		apisMenu.add(mailSubmenu);
 		apisMenu.add(facebookSubmenu);
 
+		String actualTimeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+
+		String[] actualSplitTimeAndDate = actualTimeStamp.split(" ");
+		String actualDate = actualSplitTimeAndDate[0];
+		String actualTime = actualSplitTimeAndDate[1];
+
+		String[] actualSplitDate = actualDate.split("/");
+		String actualMounth = actualSplitDate[1];
+		String actualYear=actualSplitDate[0];
+		Calendar cal = Calendar.getInstance();
+	    int actualWeek = cal.get(Calendar.WEEK_OF_YEAR);
+		String actualDay = actualSplitDate[2];
+
+		String[] actualSplitTime = actualTime.split(":");
+		String actualHour = actualSplitTime[0];
+		
+		
 		timeLineMenu.add(hourSubmenu);
 		timeLineMenu.add(twentyFourhSubmenu);
 		timeLineMenu.add(weekSubmenu);
 		timeLineMenu.add(mounthSubmenu);
+		timeLineMenu.add(allSubMenu);
+		
 
 		searchMenu.add(filterSubmenu);
 
@@ -130,8 +152,9 @@ public class MainGui {
 		String[] columnNames = { "API", "Time","Title", "Content", "User" };
 
 		
-//		JTable table = new JTable(allData(), columnNames);
+
 		AnalyseData analyseData=new AnalyseData();
+		DefaultTableModel model = new DefaultTableModel(analyseData.analyseData(), columnNames);
 		JTable table = new JTable(analyseData.analyseData(), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(800, 400));
 		table.setFillsViewportHeight(true);
@@ -139,6 +162,62 @@ public class MainGui {
 		JScrollPane scrollPanel = new JScrollPane(table);
 
 		centerPanel.add(scrollPanel);
+		
+		
+		hourSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				table.setModel(model);
+				model.setDataVector(analyseData.analyseDataAtThisHour(actualHour, actualDay, actualMounth, actualYear),columnNames);
+				table.repaint();
+				
+			}
+		});
+		
+		twentyFourhSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				table.setModel(model);
+				model.setDataVector(analyseData.analyseDataAtThis24Hours( actualDay, actualMounth, actualYear),columnNames);
+				table.repaint();
+				
+			}
+		});
+		
+		weekSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				table.setModel(model);
+				model.setDataVector(analyseData.analyseDataAtThisWeek(actualWeek,actualMounth, actualYear),columnNames);
+				table.repaint();
+			}
+		});
+		
+		mounthSubmenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				table.setModel(model);
+				model.setDataVector(analyseData.analyseDataAtThisMounth(actualMounth, actualYear),columnNames);
+				table.repaint();
+				
+			}
+		});
+		
+		allSubMenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				table.setModel(model);
+				model.setDataVector(analyseData.analyseData(), columnNames);
+				table.repaint();
+				
+			}
+		});
 
 		frame.add(bda, BorderLayout.PAGE_END);
 		frame.add(menuBar, BorderLayout.PAGE_START);
@@ -153,29 +232,7 @@ public class MainGui {
 		frame.setVisible(true);
 	}
 
-	public Object[][] allData()	{
-		twitterHandler=new TwitterHandler();
-		mailHandler=new ReceiverOfMails();
-		facebookHandler=new FacebookAPI();
-		Object [][] data1=twitterHandler.tweetsInGeneral();
-		Object [][] data2=mailHandler.receiveMailsInGeneral("es1.eic2.5@gmail.com", "MiguelNeto15");
-		Object [][] data3=facebookHandler.getPostsInGeneral();
-		
-		Object[][] result1 = new Object[data1.length + data2.length][];
-
-		System.arraycopy(data1, 0, result1, 0, data1.length);
-		System.arraycopy(data2, 0, result1, data1.length, data2.length);
-		
-		
-		Object[][] result2 = new Object[result1.length + data3.length][];
-		
-		System.arraycopy(result1, 0, result2, 0, result1.length);
-		System.arraycopy(data3, 0, result2, result1.length, data3.length);
-		
-		
-		
-		return result2;
-	}
+	
 	
 	
 	/**
