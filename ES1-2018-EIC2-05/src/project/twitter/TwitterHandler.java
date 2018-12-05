@@ -1,10 +1,21 @@
 package project.twitter;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -21,11 +32,37 @@ public class TwitterHandler {
 	 * twitter
 	 */
 	public TwitterHandler() {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		
+		DocumentBuilder builder = null;
+		try {
+			builder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Document document = null;
+		try {
+			document = builder.parse(new File("config.xml"));
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		document.getDocumentElement().normalize();
+		
+		NodeList nList = document.getElementsByTagName("twitter");
+		
+		Element e = (Element) nList.item(0);
+		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
-		cb.setDebugEnabled(true).setOAuthConsumerKey("9R0h5yjbeJVmcrgslBdhBYZw1")
-				.setOAuthConsumerSecret("GgtCoSHsQY4wEJmasj8GkBEmwoDcVYZJRV07FamfONcKVYEgDx")
-				.setOAuthAccessToken("1051492546516570112-NBX08c31mPvjTfT3yUe5tNSc1neLUK")
-				.setOAuthAccessTokenSecret("hNIpSQxitQPdt8qZDiwGfqn19iCZVkNcONBUWGB7yZvtv");
+		cb.setDebugEnabled(true).setOAuthConsumerKey(e.getElementsByTagName("consumerkey").item(0).getTextContent())
+				.setOAuthConsumerSecret(e.getElementsByTagName("consumersecret").item(0).getTextContent())
+				.setOAuthAccessToken(e.getElementsByTagName("accesstoken").item(0).getTextContent())
+				.setOAuthAccessTokenSecret(e.getElementsByTagName("accesstokensecret").item(0).getTextContent());
 
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		this.twitter = tf.getInstance();
@@ -152,6 +189,10 @@ public class TwitterHandler {
 		return twitter;
 	}
 
+	/**
+	 * 
+	 * @return uma lista com todos os timestamp de cada tweet da timeline
+	 */
 	public ArrayList<String> timeStamps() {
 		ArrayList<String> timeStamps = new ArrayList<String>();
 		try {
@@ -371,4 +412,9 @@ public class TwitterHandler {
 		return data;
 	}
 
+	public static void main(String[] args) {
+		TwitterHandler th = new TwitterHandler();
+		th.tweetsOnTwitterAPI();
+	}
+	
 }
