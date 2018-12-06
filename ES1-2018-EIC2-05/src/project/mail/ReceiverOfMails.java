@@ -21,8 +21,7 @@ import org.xml.sax.SAXException;
 
 public class ReceiverOfMails {
 
-	@SuppressWarnings("unused")
-	private Element e;
+	private static Element e;
 
 	public ReceiverOfMails() {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -50,6 +49,7 @@ public class ReceiverOfMails {
 		NodeList nList = document.getElementsByTagName("email");
 
 		e = (Element) nList.item(0);
+
 	}
 
 	public Object[][] receiveMailsInGeneral(String username, String password)	{
@@ -134,15 +134,15 @@ public class ReceiverOfMails {
 			Message messages[] = emailFolder.getMessages();
 			for (int i = 0; i < messages.length; i++) {
 				Message message = messages[i];
-				//				System.out.println("Email Number: " + i);
+				//System.out.println("Email Number: " + i);
 				data[(messages.length-1)-i][1] = message.getSubject();
-				//				System.out.println("Subject: " + message.getSubject());
+				//System.out.println("Subject: " + message.getSubject());
 				data[(messages.length-1)-i][3] = message.getFrom();
-				//				System.out.println("From: " + message.getFrom()[0]);
+				//System.out.println("From: " + message.getFrom()[0]);
 				data[(messages.length-1)-i][0] = convertTime(message.getSentDate().getTime());
-				//				System.out.println("Sent Date: " + message.getSentDate());
+				//System.out.println("Sent Date: " + message.getSentDate());
 				try {
-					//					System.out.println("Content: " + getTextFromMessage(message));
+					//System.out.println("Content: " + getTextFromMessage(message));
 					data[(messages.length-1)-i][2] = getTextFromMessage(message);
 
 				} catch (Exception e) {
@@ -463,9 +463,8 @@ public class ReceiverOfMails {
 		}
 		return data;
 	}
-
-	public static void main(String[] args) {
-		ReceiverOfMails rc=new ReceiverOfMails();
-		rc.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15");
+	
+	public Element getEl() {
+		return e;
 	}
 }

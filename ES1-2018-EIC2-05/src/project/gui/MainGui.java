@@ -23,8 +23,6 @@ public class MainGui {
 	protected static ReceiverOfMails mailHandler;
 	protected static FacebookAPI facebookHandler;
 	
-	
-
 	/**
 	 * construtor da GUI
 	 * 
@@ -232,9 +230,6 @@ public class MainGui {
 		frame.setVisible(true);
 	}
 
-	
-	
-	
 	/**
 	 * Para executar a GUI
 	 * 

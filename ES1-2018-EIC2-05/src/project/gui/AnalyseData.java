@@ -122,7 +122,7 @@ public class AnalyseData {
 				properties.setProperty("mail.store.protocol", "imaps");
 				Session emailSession = Session.getDefaultInstance(properties);
 				Store emailStore = emailSession.getStore("imaps");
-				emailStore.connect("imap.gmail.com", "es1.eic2.5@gmail.com", "MiguelNeto15");
+				emailStore.connect("imap.gmail.com", mailHandler.getEl().getElementsByTagName("username").item(0).getTextContent(), mailHandler.getEl().getElementsByTagName("password").item(0).getTextContent());
 				// getting inbox folder
 				Folder emailFolder = emailStore.getFolder("Inbox");
 				emailFolder.open(Folder.READ_ONLY);

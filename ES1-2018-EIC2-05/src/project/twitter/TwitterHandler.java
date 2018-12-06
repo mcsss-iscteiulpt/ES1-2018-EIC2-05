@@ -100,8 +100,7 @@ public class TwitterHandler {
 
 				i++;
 
-				System.out.println(
-						status.getUser().getName() + ":" + status.getText() + " :" + status.getCreatedAt().getTime());
+				//System.out.println(status.getUser().getName() + ":" + status.getText() + " :" + status.getCreatedAt().getTime());
 			}
 		}
 
@@ -139,8 +138,7 @@ public class TwitterHandler {
 
 				i++;
 
-				System.out.println(
-						status.getUser().getName() + ":" + status.getText() + " :" + status.getCreatedAt().getTime());
+				//System.out.println(status.getUser().getName() + ":" + status.getText() + " :" + status.getCreatedAt().getTime());
 			}
 		}
 
@@ -160,7 +158,7 @@ public class TwitterHandler {
 		try {
 
 			Status status = twitter.updateStatus(tweetText);
-			System.out.println("Successfully updated the status to [" + status.getText() + "].");
+			//System.out.println("Successfully updated the status to [" + status.getText() + "].");
 		}
 
 		catch (Exception e) {
@@ -185,10 +183,6 @@ public class TwitterHandler {
 		return tweetTime;
 	}
 
-	public Twitter getTwitter() {
-		return twitter;
-	}
-
 	/**
 	 * 
 	 * @return uma lista com todos os timestamp de cada tweet da timeline
@@ -211,6 +205,14 @@ public class TwitterHandler {
 		return timeStamps;
 	}
 
+	/**
+	 * 
+	 * @param currentHour
+	 * @param currentDay
+	 * @param currentMounth
+	 * @param currentYear
+	 * @return os tweets que foram publicados na ultima hora
+	 */
 	public Object[][] getTwittersOnThisHour(String currentHour, String currentDay, String currentMounth,
 			String currentYear) {
 		Object[][] data = { { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
@@ -258,6 +260,13 @@ public class TwitterHandler {
 		return data;
 	}
 
+	/**
+	 * 
+	 * @param currentDay
+	 * @param currentMounth
+	 * @param currentYear
+	 * @return os tweets que foram publicados no ultimo dia
+	 */
 	public Object[][] getTwittersOnThisDay(String currentDay, String currentMounth, String currentYear) {
 		Object[][] data = { { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
@@ -299,6 +308,12 @@ public class TwitterHandler {
 		return data;
 	}
 
+	/**
+	 * 
+	 * @param currentMounth
+	 * @param currentYear
+	 * @return os tweets que foram pulicados no ultimo mes
+	 */
 	public Object[][] getTwittersOnThisMounth(String currentMounth, String currentYear) {
 		Object[][] data = { { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
@@ -337,6 +352,13 @@ public class TwitterHandler {
 		return data;
 	}
 
+	/**
+	 * 
+	 * @param currentWeek
+	 * @param currentMounth
+	 * @param currentYear
+	 * @return os tweets que foram publicados na ultima semana
+	 */
 	public Object[][] getTwittersOnThisWeek(int currentWeek, String currentMounth, String currentYear) {
 
 		Object[][] data = { { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
@@ -381,6 +403,11 @@ public class TwitterHandler {
 		return data;
 	}
 
+	/**
+	 * 
+	 * @param word
+	 * @return os tweets que continham a palavra pesquisada
+	 */
 	public Object[][] searchWordInTweet(String word) {
 		Object[][] data = { { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
@@ -412,9 +439,13 @@ public class TwitterHandler {
 		return data;
 	}
 
-	public static void main(String[] args) {
-		TwitterHandler th = new TwitterHandler();
-		th.tweetsOnTwitterAPI();
+	/**
+	 * 
+	 * @return a instancia do twitter
+	 */
+	public Twitter getTwitter() {
+		// TODO Auto-generated method stub
+		return twitter;
 	}
 	
 }
