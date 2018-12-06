@@ -17,12 +17,12 @@ import javax.swing.WindowConstants;
 
 import project.mail.SenderOfMails;
 
-public class SendMailGui extends MainGui {
+public class SendMailGui {
 	
 	private SenderOfMails sender;
+	private JFrame frame;
 	
 	public SendMailGui(String frameTitle) {
-		super(frameTitle);
 		frame = new JFrame(frameTitle);
 		frame.setSize(500, 200);
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -74,6 +74,10 @@ public class SendMailGui extends MainGui {
 		frame.add(endOfPage, BorderLayout.PAGE_END);
 	}	
 
+	public void open() {
+		frame.setVisible(true);
+	}
+	
 	public static void main(String[] args) {
 		SendMailGui gui = new SendMailGui("BDA(BOM DIA ACADEMIA)");
 		gui.open();

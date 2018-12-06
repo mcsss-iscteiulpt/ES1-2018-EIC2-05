@@ -3,13 +3,16 @@ package project.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -20,12 +23,24 @@ import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
-public class TwitterGui extends MainGui {
+import project.twitter.TwitterHandler;
+
+public class TwitterGui  {
 
 	JTable table;
+	private JFrame frame;
+	private TwitterHandler twitterHandler;
 	
 	public TwitterGui(String frameTitle) {
-		super(frameTitle);
+		frame = new JFrame(frameTitle);
+		frame.setSize(900, 600);
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+		frame.setLocation(x, y);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		twitterHandler = new TwitterHandler();
+
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
@@ -181,16 +196,31 @@ public class TwitterGui extends MainGui {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SearchGui searchGui = new SearchGui("BDA(BOM DIA ACADEMIA)");
-				searchGui.addContent();
+				SearchGuiInTwitter searchGui = new SearchGuiInTwitter("BDA(BOM DIA ACADEMIA)");
+				searchGui.addContentTable(table);
 				searchGui.open();
-				JScrollPane scrollPanel = new JScrollPane(searchGui.addContentTable());
-
-				centerPanel.add(scrollPanel);
+				
 				
 			}
 		});
+		ArrayList<String>content=twitterHandler.getContent();
+		ContentGui contentGui=new ContentGui("BDA(BOM DIA ACADEMIA)");
+		contentGui.addContent();
+		table.addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
 
+		    	int row = table.rowAtPoint(evt.getPoint());
+		    	int col = table.columnAtPoint(evt.getPoint());
+		        if(col==1)	{
+		       	contentGui.changeText(content.get(row));
+		      	System.out.println(content.get(row));
+		        	contentGui.open();
+		        }
+		    }
+		});
+		
+		
 		frame.add(bda, BorderLayout.PAGE_END);
 		frame.add(menuBar, BorderLayout.PAGE_START);
 		frame.add(centerPanel, BorderLayout.CENTER);
@@ -201,6 +231,10 @@ public class TwitterGui extends MainGui {
 	
 	public JTable getJtable()	{
 		return table;
+	}
+	
+	public void open() {
+		frame.setVisible(true);
 	}
 
 	public static void main(String[] args) {

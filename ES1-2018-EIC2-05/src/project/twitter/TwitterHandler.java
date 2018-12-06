@@ -14,6 +14,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterHandler {
 
 	Twitter twitter;
+	private ArrayList<String>content;
 
 	/**
 	 * Construtor da classe TwitterHandler: cria a instance necessária, através dos
@@ -21,6 +22,7 @@ public class TwitterHandler {
 	 * twitter
 	 */
 	public TwitterHandler() {
+		content=new ArrayList<String>();
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true).setOAuthConsumerKey("9R0h5yjbeJVmcrgslBdhBYZw1")
 				.setOAuthConsumerSecret("GgtCoSHsQY4wEJmasj8GkBEmwoDcVYZJRV07FamfONcKVYEgDx")
@@ -60,7 +62,8 @@ public class TwitterHandler {
 				data[i][2] = "No title On Twitters";
 				data[i][3] = (status.getText());
 				data[i][4] = (status.getUser().getName());
-
+				
+				
 				i++;
 
 				System.out.println(
@@ -82,7 +85,7 @@ public class TwitterHandler {
 	 * @return tweets
 	 */
 	public Object[][] tweetsOnTwitterAPI() {
-
+		content=new ArrayList<String>();
 		Object[][] data = { { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
@@ -100,6 +103,8 @@ public class TwitterHandler {
 				data[i][1] = (status.getText());
 				data[i][2] = (status.getUser().getName());
 
+				content.add(status.getText());
+				
 				i++;
 
 				System.out.println(
@@ -369,6 +374,10 @@ public class TwitterHandler {
 		}
 
 		return data;
+	}
+	
+	public ArrayList<String> getContent()	{
+		return content;
 	}
 
 }

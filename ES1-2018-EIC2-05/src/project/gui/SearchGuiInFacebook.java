@@ -9,15 +9,19 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+
+import project.facebook.FacebookAPI;
 
 
-public class PostGui  {
-
+public class SearchGuiInFacebook {
+	private FacebookAPI facebookAPI;
 	private JFrame frame;
 	
-	public PostGui(String frameTitle) {
+	public SearchGuiInFacebook(String frameTitle) {
 		frame = new JFrame(frameTitle);
 		frame.setSize(400, 100);
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -25,29 +29,37 @@ public class PostGui  {
 		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		addContent();
 	}
 
 	/**
 	 * Janela onde vamos pesquisar pela palavra chave que queremos
 	 */
-	public void addContent() {
+	public void addContentTable(JTable table) {
+		facebookAPI=new FacebookAPI();
 		frame.setLayout(new BorderLayout());
+		
 
-		JTextField tweetText = new JTextField();
+		JTextField searchText = new JTextField();
 
-		JButton postButton = new JButton("Post !!!");
-		postButton.addActionListener(new ActionListener() {
-
+		JButton searchButton = new JButton("Search !!!");
+		searchButton.addActionListener(new ActionListener() {
+		
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String[] columnNames = { "Time", "Content", "User" };
+				DefaultTableModel model = new DefaultTableModel(facebookAPI.getPostsOnTheApi(), columnNames);
+				table.setModel(model);
+				model.setDataVector(facebookAPI.searckWordInFacebook(searchText.getText()), columnNames);
+				table.repaint();
 				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
 
-		frame.add(tweetText, BorderLayout.CENTER);
-		frame.add(postButton, BorderLayout.PAGE_END);
-
+		
+		
+		
+		frame.add(searchText, BorderLayout.CENTER);
+		frame.add(searchButton, BorderLayout.PAGE_END);
 	}
 
 	public void open() {
@@ -55,9 +67,8 @@ public class PostGui  {
 	}
 	
 	public static void main(String[] args) {
-		PostGui gui = new PostGui("BDA(BOM DIA ACADEMIA)");
-		gui.addContent();
-		gui.open();
+		SearchGuiInFacebook s=new SearchGuiInFacebook("");
+		s.addContentTable(null);
+		s.open();
 	}
-
 }

@@ -11,6 +11,7 @@ import java.util.Calendar;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import project.bdaAPI.AnalyseData;
 import project.facebook.FacebookAPI;
 import project.mail.ReceiverOfMails;
 import project.twitter.TwitterHandler;

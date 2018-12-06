@@ -12,10 +12,15 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-public class TweetGui extends MainGui {
+import project.twitter.TwitterHandler;
+
+public class TweetGui  {
+	
+	private JFrame frame;
+	private TwitterHandler twitterHandler;
 	
 	public TweetGui(String frameTitle) {
-		super(frameTitle);
+		twitterHandler=new TwitterHandler();
 		frame = new JFrame(frameTitle);
 		frame.setSize(400, 100);
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -49,6 +54,10 @@ public class TweetGui extends MainGui {
 
 	}
 
+	public void open() {
+		frame.setVisible(true);
+	}
+	
 	public static void main(String[] args) {
 		TweetGui gui = new TweetGui("BDA(BOM DIA ACADEMIA)");
 		gui.open();

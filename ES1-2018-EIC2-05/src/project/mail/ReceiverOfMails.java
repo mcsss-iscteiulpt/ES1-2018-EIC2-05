@@ -1,6 +1,7 @@
 package project.mail;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Properties;
 import java.util.TimeZone;
@@ -10,6 +11,8 @@ import javax.mail.internet.MimeMultipart;
 import org.jsoup.Jsoup;
 
 public class ReceiverOfMails {
+	
+	private ArrayList<String>content=new ArrayList<String>();
 	
 	public Object[][] receiveMailsInGeneral(String username, String password)	{
 		Object[][] data = { { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
@@ -103,11 +106,12 @@ public class ReceiverOfMails {
 				try {
 //					System.out.println("Content: " + getTextFromMessage(message));
 					data[(messages.length-1)-i][2] = getTextFromMessage(message);
-
+					content.add(getTextFromMessage(message));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
 			}
 			// closing email folder
 			emailFolder.close(false);
@@ -422,7 +426,70 @@ public class ReceiverOfMails {
 		}
 		return data;
 	}
+	
+	
+	public Object[][] searchWordInGmail(String word)	{
+		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, };
+		try {
+			Properties properties = new Properties();
+			properties.setProperty("mail.store.protocol", "imaps");
+			Session emailSession = Session.getDefaultInstance(properties);
+			Store emailStore = emailSession.getStore("imaps");
+			emailStore.connect("imap.gmail.com", "es1.eic2.5@gmail.com", "MiguelNeto15");
+			// getting inbox folder
+			Folder emailFolder = emailStore.getFolder("Inbox");
+			emailFolder.open(Folder.READ_ONLY);
+			Message messages[] = emailFolder.getMessages();
+			for (int i = 0; i < messages.length; i++) {
+				
+				Message message = messages[i];
+				if(message.getSubject().contains(word))	{
+//				System.out.println("Email Number: " + i);
+				data[(messages.length-1)-i][1] = message.getSubject();
+//				System.out.println("Subject: " + message.getSubject());
+				data[(messages.length-1)-i][3] = message.getFrom();
+//				System.out.println("From: " + message.getFrom()[0]);
+				data[(messages.length-1)-i][0] = convertTime(message.getSentDate().getTime());
+//				System.out.println("Sent Date: " + message.getSentDate());
+				try {
+//					System.out.println("Content: " + getTextFromMessage(message));
+					data[(messages.length-1)-i][2] = getTextFromMessage(message);
 
+				}
+				catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				}
+			}
+			// closing email folder
+			emailFolder.close(false);
+			emailStore.close();
+		} catch (NoSuchProviderException nspe) {
+			nspe.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+	}
+
+	public ArrayList<String> getContent()	{
+		return content;
+	}
+	
 	public static void main(String[] args) {
 		ReceiverOfMails rc=new ReceiverOfMails();
 		rc.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15");

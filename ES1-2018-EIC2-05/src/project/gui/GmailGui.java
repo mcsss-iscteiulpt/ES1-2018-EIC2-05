@@ -3,13 +3,16 @@ package project.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -24,10 +27,22 @@ import project.mail.ReceiverOfMails;
 
 
 
-public class GmailGui extends MainGui {
+public class GmailGui  {
 
+	public JFrame frame;
+	private ReceiverOfMails mailReceiveMails;
+	
 	public GmailGui(String frameTitle) {
-		super(frameTitle);
+		mailReceiveMails=new ReceiverOfMails();
+		frame = new JFrame(frameTitle);
+		frame.setSize(900, 600);
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+		frame.setLocation(x, y);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
+
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
@@ -98,7 +113,7 @@ public class GmailGui extends MainGui {
 		String[] columnNames = { "Time", "Title", "Content","User" };
 
 		
-		ReceiverOfMails mailReceiveMails=new ReceiverOfMails();
+		
 		DefaultTableModel model = new DefaultTableModel(mailReceiveMails.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15"), columnNames);
 		JTable table = new JTable(mailReceiveMails.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15"), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
@@ -191,6 +206,35 @@ public class GmailGui extends MainGui {
 			}
 		});
 		
+		filterSubmenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SearchGuiInMail searchGui = new SearchGuiInMail("BDA(BOM DIA ACADEMIA)");
+				searchGui.addContentTable(table);
+				searchGui.open();
+				
+				
+			}
+		});
+		
+		ArrayList<String>content=mailReceiveMails.getContent();
+		ContentGui contentGui=new ContentGui("BDA(BOM DIA ACADEMIA)");
+		contentGui.addContent();
+		table.addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+
+		    	int row = table.rowAtPoint(evt.getPoint());
+		    	int col = table.columnAtPoint(evt.getPoint());
+		        if(col==2)	{
+		       	contentGui.changeText(content.get(row));
+		      	System.out.println(content.get(row));
+		        	contentGui.open();
+		        }
+		    }
+		});
+		
 		frame.add(bda, BorderLayout.PAGE_END);
 		frame.add(menuBar, BorderLayout.PAGE_START);
 		frame.add(centerPanel, BorderLayout.CENTER);
@@ -199,6 +243,11 @@ public class GmailGui extends MainGui {
 
 	}
 	
+	
+	public void open() {
+		frame.setVisible(true);
+	}
+
 	
 	public static void main(String[] args) {
 		GmailGui gui = new GmailGui("BDA(BOM DIA ACADEMIA)");
