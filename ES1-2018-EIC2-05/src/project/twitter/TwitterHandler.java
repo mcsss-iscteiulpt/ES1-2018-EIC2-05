@@ -157,7 +157,7 @@ public class TwitterHandler {
 	public void sendTweet(String tweetText) {
 		try {
 
-			Status status = twitter.updateStatus(tweetText);
+			twitter.updateStatus(tweetText);
 			//System.out.println("Successfully updated the status to [" + status.getText() + "].");
 		}
 
