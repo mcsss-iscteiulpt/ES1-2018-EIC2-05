@@ -33,6 +33,7 @@ public class ContentGui  {
 	
 	public void changeText(String text)	{
 		textArea.setText(text);
+		textArea.setEditable(false);
 	}
 	
 	public void open() {

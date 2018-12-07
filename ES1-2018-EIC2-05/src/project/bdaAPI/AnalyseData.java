@@ -157,42 +157,21 @@ public class AnalyseData {
 				e.printStackTrace();
 			}
 			int k = j;
-			String accessToken = "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-			@SuppressWarnings("deprecation")
-			FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-			User me = fbClient.fetchObject("me", User.class);
 
-			// teste com o perfil recentemente criado
-
-			System.out.println(me.getName());
-
-			// App ID - 360660408005152
-			// App secret - 2d0c83ae88e74968f5c93f905666dfc0
-
-			// Extender o Access Token de 1h para 2 meses
-			// Recolher os posts do utilizador numa lista e imprimi-los na consola
-			Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-			System.out.println("\nPosts:");
-			int counter = 0;
-			// int counterTotal = 0;
-			for (List<Post> page : result) {
+			
+			for (List<Post> page : facebookHandler.result) {
 				for (Post aPost : page) {
-					// Filters only posts that contain the word "M"
-					// if (aPost.getMessage() != null && aPost.getMessage().contains("Mestrado")) {
-					System.out.println("---- Post " + counter + " ----");
-					System.out.println("Id: " + "www.facebook.com/" + aPost.getId());
-					System.out.println("Message: " + aPost.getMessage());
-					System.out.println("Created: " + aPost.getCreatedTime());
-					counter++;
+
+
 					data[k][0] = "Facebook";
-					data[k][1] = (facebookHandler.convertTime(aPost.getCreatedTime().getTime()));
+					data[k][1] = (facebookHandler.convertTime(aPost.getUpdatedTime().getTime()));
 					data[k][2] = "No title On Facebbok Posts";
 					data[k][3] = (aPost.getMessage());
-					data[k][4] = (aPost.getId());
+					data[k][4] = (facebookHandler.me.getName());
 
 					k++;
 				}
-				// counterTotal++;
+
 			}
 		}
 
@@ -357,36 +336,12 @@ public class AnalyseData {
 
 			int k = j;
 
-			String accessToken = "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-			@SuppressWarnings("deprecation")
-			FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-			User me = fbClient.fetchObject("me", User.class);
 
-			// teste com o perfil recentemente criado
-
-			System.out.println(me.getName());
-
-			// App ID - 360660408005152
-			// App secret - 2d0c83ae88e74968f5c93f905666dfc0
-
-			// Extender o Access Token de 1h para 2 meses
-			// Recolher os posts do utilizador numa lista e imprimi-los na consola
-			Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-			System.out.println("\nPosts:");
-			int counter = 0;
-			// int counterTotal = 0;
-
-			for (List<Post> page : result) {
+			for (List<Post> page : facebookHandler.result) {
 				for (Post aPost : page) {
-					// Filters only posts that contain the word "M"
-					// if (aPost.getMessage() != null && aPost.getMessage().contains("Mestrado")) {
-					System.out.println("---- Post " + counter + " ----");
-					System.out.println("Id: " + "www.facebook.com/" + aPost.getId());
-					System.out.println("Message: " + aPost.getMessage());
-					System.out.println("Created: " + aPost.getCreatedTime());
-					counter++;
 
-					String timeAndDate = facebookHandler.convertTime(aPost.getCreatedTime().getTime());
+
+					String timeAndDate = facebookHandler.convertTime(aPost.getUpdatedTime().getTime());
 
 					String[] facebookSplitTimeAndDate = timeAndDate.split(" ");
 					String facebookActualData = facebookSplitTimeAndDate[0];
@@ -403,14 +358,14 @@ public class AnalyseData {
 					if (currentHour.equals(facebookActualHour) && currentDay.equals(facebookActualDay)
 							&& currentMounth.equals(facebookActualMounth) && currentYear.equals(facebookActualYear)) {
 
-						data[k][0] = (facebookHandler.convertTime(aPost.getCreatedTime().getTime()));
+						data[k][0] = (facebookHandler.convertTime(aPost.getUpdatedTime().getTime()));
 						data[k][1] = (aPost.getMessage());
-						data[k][2] = (aPost.getId());
+						data[k][2] = (facebookHandler.me.getName());
 					}
 					k++;
 
 				}
-				// counterTotal++;
+
 			}
 
 		}
@@ -565,64 +520,33 @@ public class AnalyseData {
 			}
 
 			int k = j;
+			
 
-			//token tirado GRAPH API após criação da app BDA
-			//token não tem todas as permissões - pode ser alterado no GRAPH API 
-					
-					String accessToken = "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-					@SuppressWarnings("deprecation")
-					FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-					User me = fbClient.fetchObject ("me", User.class);
-					
-					
-					
-			//teste com o perfil recentemente criado		
-					
-					System.out.println(me.getName());
-					
-			// App ID - 360660408005152
-			// App secret - 2d0c83ae88e74968f5c93f905666dfc0
-					
-					
-			//Extender o Access Token de 1h para 2 meses		
-					//Recolher os posts do utilizador numa lista e imprimi-los na consola 	
-					Connection<Post> result = fbClient.fetchConnection("me/feed",Post.class);
-					System.out.println("\nPosts:");
-					int counter = 0;
-					//int counterTotal = 0;
-				
-					
-					for (List<Post> page : result) {
-						for (Post aPost : page) {
-							// Filters only posts that contain the word "M"
-							//if (aPost.getMessage() != null && aPost.getMessage().contains("Mestrado")) {
-								System.out.println("---- Post "+ counter + " ----");
-								System.out.println("Id: "+"www.facebook.com/"+aPost.getId());
-								System.out.println("Message: "+aPost.getMessage());
-								System.out.println("Created: "+aPost.getCreatedTime());
-								counter++;
-								
-								String timeAndDate = (facebookHandler.convertTime(aPost.getCreatedTime().getTime()));
-								String[] facebookSplitTimeAndDate = timeAndDate.split(" ");
+			for (List<Post> page :facebookHandler.result) {
+				for (Post aPost : page) {
 
-								String facebookActualData = facebookSplitTimeAndDate[0];
-								String[] facebookActualSplitData = facebookActualData.split("/");
-								String facebookActualDay = facebookActualSplitData[2];
-								String facebookActualMounth = facebookActualSplitData[1];
-								String facebookActualYear = facebookActualSplitData[0];
 
-								if (currentDay.equals(facebookActualDay) && currentMounth.equals(facebookActualMounth)
-										&& currentYear.equals(facebookActualYear)) {
-								
-								data[k][0] = (facebookHandler.convertTime(aPost.getCreatedTime().getTime()));
-								data[k][1] = (aPost.getMessage());
-								data[k][2] = (aPost.getId());
-								}
-								k++;
-								
-							}
-							//counterTotal++;
-						}
+					String timeAndDate = facebookHandler.convertTime(aPost.getUpdatedTime().getTime());
+					String[] facebookSplitTimeAndDate = timeAndDate.split(" ");
+
+					String facebookActualData = facebookSplitTimeAndDate[0];
+					String[] facebookActualSplitData = facebookActualData.split("/");
+					String facebookActualDay = facebookActualSplitData[2];
+					String facebookActualMounth = facebookActualSplitData[1];
+					String facebookActualYear = facebookActualSplitData[0];
+
+					if (currentDay.equals(facebookActualDay) && currentMounth.equals(facebookActualMounth)
+							&& currentYear.equals(facebookActualYear)) {
+
+						data[k][0] = (facebookHandler.convertTime(aPost.getUpdatedTime().getTime()));
+						data[k][1] = (aPost.getMessage());
+						data[k][2] = (facebookHandler.me.getName());
+					}
+					k++;
+
+				}
+
+			}
 
 		}
 
@@ -771,59 +695,29 @@ public class AnalyseData {
 
 			int k = j;
 
-			String accessToken = "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-			@SuppressWarnings("deprecation")
-			FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-			User me = fbClient.fetchObject ("me", User.class);
-			
-			
-			
-	//teste com o perfil recentemente criado		
-			
-			System.out.println(me.getName());
-			
-	// App ID - 360660408005152
-	// App secret - 2d0c83ae88e74968f5c93f905666dfc0
-			
-			
-	facebookHandler.setExtendedAccessToken(fbClient.obtainExtendedAccessToken("360660408005152","2d0c83ae88e74968f5c93f905666dfc0"));
 
-	//Recolher os posts do utilizador numa lista e imprimi-los na consola 	
-			Connection<Post> result = fbClient.fetchConnection("me/feed",Post.class);
-			System.out.println("\nPosts:");
-			int counter = 0;
-			//int counterTotal = 0;
-			
-			
-			for (List<Post> page : result) {
+			for (List<Post> page : facebookHandler.result) {
 				for (Post aPost : page) {
-					// Filters only posts that contain the word "M"
-					//if (aPost.getMessage() != null && aPost.getMessage().contains("Mestrado")) {
-						System.out.println("---- Post "+ counter + " ----");
-						System.out.println("Id: "+"www.facebook.com/"+aPost.getId());
-						System.out.println("Message: "+aPost.getMessage());
-						System.out.println("Created: "+aPost.getCreatedTime());
-						counter++;
-						
-						String timeAndDate = ( facebookHandler).convertTime(aPost.getCreatedTime().getTime());
-						String[] facebookSplitTimeAndDate = timeAndDate.split(" ");
-						String facebookActualData = facebookSplitTimeAndDate[0];
-						String[] facebookActualSplitData = facebookActualData.split("/");
-						String facebookActualMounth = facebookActualSplitData[1];
-						String facebookActualYear = facebookActualSplitData[0];
+					
 
-						if (currentMounth.equals(facebookActualMounth) && currentYear.equals(facebookActualYear)) {
-						
-						data[k][0] = (facebookHandler.convertTime(aPost.getCreatedTime().getTime()));
+					String timeAndDate = facebookHandler.convertTime(aPost.getUpdatedTime().getTime());
+					String[] facebookSplitTimeAndDate = timeAndDate.split(" ");
+					String facebookActualData = facebookSplitTimeAndDate[0];
+					String[] facebookActualSplitData = facebookActualData.split("/");
+					String facebookActualMounth = facebookActualSplitData[1];
+					String facebookActualYear = facebookActualSplitData[0];
+
+					if (currentMounth.equals(facebookActualMounth) && currentYear.equals(facebookActualYear)) {
+
+						data[k][0] = (facebookHandler.convertTime(aPost.getUpdatedTime().getTime()));
 						data[k][1] = (aPost.getMessage());
-						data[k][2] = (aPost.getId());
-						}
-						i++;
-						
+						data[k][2] = (facebookHandler.me.getName());
 					}
-					//counterTotal++;
+					k++;
+
 				}
-		}
+
+			}		}
 
 		catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -981,67 +875,36 @@ public class AnalyseData {
 			}
 
 			int k = j;
-
-			String accessToken = "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-			@SuppressWarnings("deprecation")
-			FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-			User me = fbClient.fetchObject ("me", User.class);
 			
 			
-			
-	//teste com o perfil recentemente criado		
-			
-			System.out.println(me.getName());
-			
-	// App ID - 360660408005152
-	// App secret - 2d0c83ae88e74968f5c93f905666dfc0
-			
-			
-	//Extender o Access Token de 1h para 2 meses		
-			//Recolher os posts do utilizador numa lista e imprimi-los na consola 	
-			Connection<Post> result = fbClient.fetchConnection("me/feed",Post.class);
-			System.out.println("\nPosts:");
-			int counter = 0;
-			//int counterTotal = 0;
-			
-			
-			for (List<Post> page : result) {
+			for (List<Post> page : facebookHandler.result) {
 				for (Post aPost : page) {
-					// Filters only posts that contain the word "M"
-					//if (aPost.getMessage() != null && aPost.getMessage().contains("Mestrado")) {
-						System.out.println("---- Post "+ counter + " ----");
-						System.out.println("Id: "+"www.facebook.com/"+aPost.getId());
-						System.out.println("Message: "+aPost.getMessage());
-						System.out.println("Created: "+aPost.getCreatedTime());
-						counter++;
-						
-						java.util.Date date = aPost.getCreatedTime();
-						Calendar cal = Calendar.getInstance();
-						cal.setTime(date);
-						int week = cal.get(Calendar.WEEK_OF_YEAR);
 
-						
-						String timeAndDate = facebookHandler.convertTime(aPost.getCreatedTime().getTime());
-						String[] facebookSplitTimeAndDate = timeAndDate.split(" ");
+					java.util.Date date = aPost.getUpdatedTime();
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(date);
+					int week = cal.get(Calendar.WEEK_OF_YEAR);
 
-						String facebookActualData = facebookSplitTimeAndDate[0];
-						String[] facebookActualSplitData = facebookActualData.split("/");
-						String facebookActualMounth = facebookActualSplitData[1];
-						String facebookActualYear = facebookActualSplitData[0];
+					String timeAndDate = facebookHandler.convertTime(aPost.getUpdatedTime().getTime());
+					String[] facebookSplitTimeAndDate = timeAndDate.split(" ");
 
-						if (currentWeek == week && currentMounth.equals(facebookActualMounth)
-								&& currentYear.equals(facebookActualYear)) {
-						
-						data[k][0] = (facebookHandler.convertTime(aPost.getCreatedTime().getTime()));
+					String facebookActualData = facebookSplitTimeAndDate[0];
+					String[] facebookActualSplitData = facebookActualData.split("/");
+					String facebookActualMounth = facebookActualSplitData[1];
+					String facebookActualYear = facebookActualSplitData[0];
+
+					if (currentWeek == week && currentMounth.equals(facebookActualMounth)
+							&& currentYear.equals(facebookActualYear)) {
+
+						data[k][0] = (facebookHandler.convertTime(aPost.getUpdatedTime().getTime()));
 						data[k][1] = (aPost.getMessage());
-						data[k][2] = (aPost.getId());
-						}
-						i++;
-						
+						data[k][2] = (facebookHandler.me.getName());
 					}
-					//counterTotal++;
+					k++;
+
 				}
-		}
+
+			}		}
 
 		catch (Exception e) {
 			System.out.println(e.getMessage());
