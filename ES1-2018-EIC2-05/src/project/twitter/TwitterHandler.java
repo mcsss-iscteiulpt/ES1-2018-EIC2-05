@@ -22,15 +22,21 @@ import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TwitterHandler.
+ */
 public class TwitterHandler {
 
+	/** The twitter. */
 	Twitter twitter;
+	
+	/** The content. */
 	private ArrayList<String>content;
 
+	
 	/**
-	 * Construtor da classe TwitterHandler: cria a instance necess�ria, atrav�s dos
-	 * acesstokens e api keys e segredos, para poder usar as funcionalidades do
-	 * twitter
+	 * Instantiates a new twitter handler.
 	 */
 	public TwitterHandler() {
 
@@ -72,11 +78,12 @@ public class TwitterHandler {
 		this.twitter = tf.getInstance();
 	}
 
+
+
 	/**
-	 * Devolve os tweets da nossa timeline do twitter, na nossa timeline geral da
-	 * API
-	 * 
-	 * @return tweets
+	 * Tweets in general.
+	 *
+	 * @return the object[][]
 	 */
 	public Object[][] tweetsInGeneral() {
 
@@ -116,11 +123,11 @@ public class TwitterHandler {
 		return data;
 	}
 
+
 	/**
-	 * Devolve os tweets da nossa timeline do twitter, na nossa timeline especifica
-	 * da API Twitter
-	 * 
-	 * @return tweets
+	 * Tweets on twitter API.
+	 *
+	 * @return the object[][]
 	 */
 	public Object[][] tweetsOnTwitterAPI() {
 		content=new ArrayList<String>();
@@ -156,10 +163,11 @@ public class TwitterHandler {
 		return data;
 	}
 
+	
 	/**
-	 * Posta tweets na nossa conta de Twitter
-	 * 
-	 * @param tweetText
+	 * Send tweet.
+	 *
+	 * @param tweetText the tweet text
 	 */
 	public void sendTweet(String tweetText) {
 		try {
@@ -174,12 +182,12 @@ public class TwitterHandler {
 
 	}
 
+	
 	/**
-	 * Converte o tempo de publica��o do tweet que est� em millisegundos para o
-	 * formato abaixo
-	 * 
-	 * @param time
-	 * @return o tempo da publica��o do tweet no formato hh:mm MM/dd/yyyy
+	 * Convert time.
+	 *
+	 * @param time the time
+	 * @return the string
 	 */
 	public String convertTime(long time) {
 
@@ -190,9 +198,11 @@ public class TwitterHandler {
 		return tweetTime;
 	}
 
+	
 	/**
-	 * 
-	 * @return uma lista com todos os timestamp de cada tweet da timeline
+	 * Time stamps.
+	 *
+	 * @return the array list
 	 */
 	public ArrayList<String> timeStamps() {
 		ArrayList<String> timeStamps = new ArrayList<String>();
@@ -212,13 +222,15 @@ public class TwitterHandler {
 		return timeStamps;
 	}
 
+	
 	/**
-	 * 
-	 * @param currentHour
-	 * @param currentDay
-	 * @param currentMounth
-	 * @param currentYear
-	 * @return os tweets que foram publicados na ultima hora
+	 * Gets the twitters on this hour.
+	 *
+	 * @param currentHour the current hour
+	 * @param currentDay the current day
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the twitters on this hour
 	 */
 	public Object[][] getTwittersOnThisHour(String currentHour, String currentDay, String currentMounth,
 			String currentYear) {
@@ -269,12 +281,14 @@ public class TwitterHandler {
 		return data;
 	}
 
+	
 	/**
-	 * 
-	 * @param currentDay
-	 * @param currentMounth
-	 * @param currentYear
-	 * @return os tweets que foram publicados no ultimo dia
+	 * Gets the twitters on this day.
+	 *
+	 * @param currentDay the current day
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the twitters on this day
 	 */
 	public Object[][] getTwittersOnThisDay(String currentDay, String currentMounth, String currentYear) {
 		content=new ArrayList<String>();
@@ -319,11 +333,13 @@ public class TwitterHandler {
 		return data;
 	}
 
+	
 	/**
-	 * 
-	 * @param currentMounth
-	 * @param currentYear
-	 * @return os tweets que foram pulicados no ultimo mes
+	 * Gets the twitters on this mounth.
+	 *
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the twitters on this mounth
 	 */
 	public Object[][] getTwittersOnThisMounth(String currentMounth, String currentYear) {
 		content=new ArrayList<String>();
@@ -365,12 +381,14 @@ public class TwitterHandler {
 		return data;
 	}
 
+	
 	/**
-	 * 
-	 * @param currentWeek
-	 * @param currentMounth
-	 * @param currentYear
-	 * @return os tweets que foram publicados na ultima semana
+	 * Gets the twitters on this week.
+	 *
+	 * @param currentWeek the current week
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the twitters on this week
 	 */
 	public Object[][] getTwittersOnThisWeek(int currentWeek, String currentMounth, String currentYear) {
 		content=new ArrayList<String>();
@@ -419,10 +437,12 @@ public class TwitterHandler {
 		return data;
 	}
 
+	
 	/**
-	 * 
-	 * @param word
-	 * @return os tweets que continham a palavra pesquisada
+	 * Search word in tweet.
+	 *
+	 * @param word the word
+	 * @return the object[][]
 	 */
 	public Object[][] searchWordInTweet(String word) {
 		content=new ArrayList<String>();
@@ -457,16 +477,21 @@ public class TwitterHandler {
 		return data;
 	}
 	
+	/**
+	 * Gets the content.
+	 *
+	 * @return the content
+	 */
 	public ArrayList<String> getContent()	{
 		return content;
 	}
 
 	/**
-	 * 
-	 * @return a instancia do twitter
+	 * Gets the twitter.
+	 *
+	 * @return the twitter
 	 */
 	public Twitter getTwitter() {
-		// TODO Auto-generated method stub
 		return twitter;
 	}
 	

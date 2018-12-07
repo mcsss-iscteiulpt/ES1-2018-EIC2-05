@@ -17,10 +17,23 @@ import javax.swing.table.DefaultTableModel;
 import project.mail.ReceiverOfMails;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SearchGuiInMail.
+ */
 public class SearchGuiInMail {
+	
+	/** The receiver of mails. */
 	private ReceiverOfMails receiverOfMails;
+	
+	/** The frame. */
 	private JFrame frame;
 	
+	/**
+	 * Instantiates a new search gui in mail.
+	 *
+	 * @param frameTitle the frame title
+	 */
 	public SearchGuiInMail(String frameTitle) {
 		frame = new JFrame(frameTitle);
 		frame.setSize(400, 100);
@@ -31,8 +44,11 @@ public class SearchGuiInMail {
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
+	
 	/**
-	 * Janela onde vamos pesquisar pela palavra chave que queremos
+	 * Adds the content table.
+	 *
+	 * @param table the table
 	 */
 	public void addContentTable(JTable table) {
 		receiverOfMails=new ReceiverOfMails();
@@ -62,6 +78,9 @@ public class SearchGuiInMail {
 		frame.add(searchButton, BorderLayout.PAGE_END);
 	}
 
+	/**
+	 * Open.
+	 */
 	public void open() {
 		frame.setVisible(true);
 	}

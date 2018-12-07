@@ -14,11 +14,23 @@ import javax.swing.WindowConstants;
 
 import project.twitter.TwitterHandler;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TweetGui.
+ */
 public class TweetGui  {
 	
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The twitter handler. */
 	private TwitterHandler twitterHandler;
 	
+	/**
+	 * Instantiates a new tweet gui.
+	 *
+	 * @param frameTitle the frame title
+	 */
 	public TweetGui(String frameTitle) {
 		twitterHandler=new TwitterHandler();
 		frame = new JFrame(frameTitle);
@@ -32,8 +44,9 @@ public class TweetGui  {
 	}
 
 
+	
 	/**
-	 * Janela onde vamos pesquisar pela palavra chave que queremos
+	 * Adds the content.
 	 */
 	public void addContent() {
 		frame.setLayout(new BorderLayout());
@@ -55,10 +68,18 @@ public class TweetGui  {
 
 	}
 
+	/**
+	 * Open.
+	 */
 	public void open() {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		TweetGui gui = new TweetGui("BDA(BOM DIA ACADEMIA)");
 		gui.open();

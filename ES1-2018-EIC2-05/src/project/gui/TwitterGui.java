@@ -25,12 +25,26 @@ import javax.swing.table.DefaultTableModel;
 
 import project.twitter.TwitterHandler;
 
+
+/**
+ * The Class TwitterGui.
+ */
 public class TwitterGui  {
 
+	/** The table. */
 	JTable table;
+	
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The twitter handler. */
 	private TwitterHandler twitterHandler;
 	
+	/**
+	 * Instantiates a new twitter gui.
+	 *
+	 * @param frameTitle the frame title
+	 */
 	public TwitterGui(String frameTitle) {
 		frame = new JFrame(frameTitle);
 		frame.setSize(900, 600);
@@ -44,10 +58,11 @@ public class TwitterGui  {
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
+	
 	/**
-	 * GUI de cada interface
-	 * 
-	 * @param nameOfAPI
+	 * Adds the content.
+	 *
+	 * @param nameOfAPI the name of API
 	 */
 	public void addContent(String nameOfAPI) {
 		frame.remove(frame);
@@ -229,14 +244,27 @@ public class TwitterGui  {
 
 	}
 	
+	/**
+	 * Gets the jtable.
+	 *
+	 * @return the jtable
+	 */
 	public JTable getJtable()	{
 		return table;
 	}
 	
+	/**
+	 * Open.
+	 */
 	public void open() {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		TwitterGui gui = new TwitterGui("BDA(BOM DIA ACADEMIA)");
 		gui.addContent("Twitter");

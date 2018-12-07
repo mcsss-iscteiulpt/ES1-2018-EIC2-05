@@ -27,12 +27,24 @@ import project.mail.ReceiverOfMails;
 
 
 
+
+/**
+ * The Class GmailGui.
+ */
 public class GmailGui  {
 
+	/** The frame. */
 	public JFrame frame;
+	
+	/** The mail receive mails. */
 	private ReceiverOfMails mailReceiveMails;
 	
 
+	/**
+	 * Instantiates a new gmail gui.
+	 *
+	 * @param frameTitle the frame title
+	 */
 	public GmailGui(String frameTitle) {
 		mailReceiveMails=new ReceiverOfMails();
 		frame = new JFrame(frameTitle);
@@ -49,10 +61,11 @@ public class GmailGui  {
 		
 	}
 
+
 	/**
-	 * GUI de cada interface
-	 * 
-	 * @param nameOfAPI
+	 * Adds the content.
+	 *
+	 * @param nameOfAPI the name of API
 	 */
 	public void addContent(String nameOfAPI) {
 		frame.remove(frame);
@@ -65,15 +78,7 @@ public class GmailGui  {
 
 		JMenuItem filterSubmenu = new JMenuItem("Choose you filter!!!");
 
-		filterSubmenu.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				SendMailGui searchGui = new SendMailGui("BDA(BOM DIA ACADEMIA)");
-				searchGui.addContent();
-				searchGui.open();
-			}
-		});
+	
 		
 		
 		JMenuItem hourSubmenu = new JMenuItem("Every Hour");
@@ -247,11 +252,19 @@ public class GmailGui  {
 	}
 	
 	
+	/**
+	 * Open.
+	 */
 	public void open() {
 		frame.setVisible(true);
 	}
 
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		GmailGui gui = new GmailGui("BDA(BOM DIA ACADEMIA)");
 		gui.addContent("Gmail");

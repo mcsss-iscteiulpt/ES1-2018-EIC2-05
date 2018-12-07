@@ -15,11 +15,22 @@ import javax.swing.WindowConstants;
 import project.facebook.FacebookAPI;
 
 
+/**
+ * The Class PostGui.
+ */
 public class PostGui  {
 
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The facebookhandler. */
 	private FacebookAPI facebookhandler;
 	
+	/**
+	 * Instantiates a new post gui.
+	 *
+	 * @param frameTitle the frame title
+	 */
 	public PostGui(String frameTitle) {
 		frame = new JFrame(frameTitle);
 		frame.setSize(400, 100);
@@ -31,8 +42,9 @@ public class PostGui  {
 		addContent();
 	}
 
+	
 	/**
-	 * Janela onde vamos pesquisar pela palavra chave que queremos
+	 * Adds the content.
 	 */
 	public void addContent() {
 		
@@ -56,10 +68,18 @@ public class PostGui  {
 
 	}
 
+	/**
+	 * Open.
+	 */
 	public void open() {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		PostGui gui = new PostGui("BDA(BOM DIA ACADEMIA)");
 		gui.addContent();

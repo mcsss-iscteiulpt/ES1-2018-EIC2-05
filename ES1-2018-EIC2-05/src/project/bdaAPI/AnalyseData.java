@@ -20,12 +20,26 @@ import project.mail.ReceiverOfMails;
 import project.twitter.TwitterHandler;
 import twitter4j.Status;
 
+
+/**
+ * The Class AnalyseData.
+ */
 public class AnalyseData {
 
+	/** The twitter handler. */
 	protected static TwitterHandler twitterHandler;
+	
+	/** The mail handler. */
 	protected static ReceiverOfMails mailHandler;
+	
+	/** The facebook handler. */
 	protected static FacebookAPI facebookHandler;
 
+	/**
+	 * Analyse data.
+	 *
+	 * @return the object[][]
+	 */
 	public Object[][] analyseData() {
 		twitterHandler = new TwitterHandler();
 		mailHandler = new ReceiverOfMails();
@@ -181,6 +195,15 @@ public class AnalyseData {
 
 	}
 
+	/**
+	 * Analyse data at this hour.
+	 *
+	 * @param currentHour the current hour
+	 * @param currentDay the current day
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the object[][]
+	 */
 	public Object[][] analyseDataAtThisHour(String currentHour, String currentDay, String currentMounth,
 			String currentYear) {
 
@@ -375,6 +398,14 @@ public class AnalyseData {
 	}
 
 	
+	/**
+	 * Analyse data at this 24 hours.
+	 *
+	 * @param currentDay the current day
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the object[][]
+	 */
 	public Object[][] analyseDataAtThis24Hours(String currentDay, String currentMounth, String currentYear) {
 
 		Object[][] data = { { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
@@ -554,6 +585,13 @@ public class AnalyseData {
 		return data;
 	}
 	
+	/**
+	 * Analyse data at this mounth.
+	 *
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the object[][]
+	 */
 	public Object[][] analyseDataAtThisMounth(String currentMounth, String currentYear) {
 
 		Object[][] data = { { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
@@ -723,6 +761,14 @@ public class AnalyseData {
 		return data;
 	}
 	
+	/**
+	 * Analyse data at this week.
+	 *
+	 * @param currentWeek the current week
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the object[][]
+	 */
 	public Object[][] analyseDataAtThisWeek(int currentWeek, String currentMounth, String currentYear) {
 
 		Object[][] data = { { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
@@ -911,6 +957,11 @@ public class AnalyseData {
 	}
 	
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		AnalyseData an = new AnalyseData();
 		an.analyseData();

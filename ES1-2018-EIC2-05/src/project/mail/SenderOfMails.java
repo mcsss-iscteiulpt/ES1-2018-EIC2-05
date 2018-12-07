@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class SenderOfMails.
  */

@@ -25,10 +25,20 @@ import javax.swing.table.DefaultTableModel;
 
 import project.facebook.FacebookAPI;
 
+
+/**
+ * The Class FacebookGui.
+ */
 public class FacebookGui {
 
+	/** The frame. */
 	private JFrame frame;
 
+	/**
+	 * Instantiates a new facebook gui.
+	 *
+	 * @param frameTitle the frame title
+	 */
 	public FacebookGui(String frameTitle) {
 		frame = new JFrame(frameTitle);
 		frame.setSize(900, 600);
@@ -41,10 +51,11 @@ public class FacebookGui {
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
+
 	/**
-	 * GUI de cada interface
-	 * 
-	 * @param nameOfAPI§
+	 * Adds the content.
+	 *
+	 * @param nameOfAPI the name of API
 	 */
 	public void addContent(String nameOfAPI) {
 		frame.remove(frame);
@@ -132,6 +143,7 @@ public class FacebookGui {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				FacebookAPI facebookAPI=new FacebookAPI();;
 				table.setModel(model);
 				model.setDataVector(facebookAPI.getPostsOnTheApi(), columnNames);
 				table.repaint();
@@ -230,10 +242,18 @@ public class FacebookGui {
 
 	}
 
+	/**
+	 * Open.
+	 */
 	public void open() {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		FacebookGui gui = new FacebookGui("BDA(BOM DIA ACADEMIA)");
 		gui.addContent("Facebook");

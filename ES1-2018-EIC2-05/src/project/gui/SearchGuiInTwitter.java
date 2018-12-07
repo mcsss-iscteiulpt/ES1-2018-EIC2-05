@@ -18,11 +18,22 @@ import project.twitter.TwitterHandler;
 
 
 
+/**
+ * The Class SearchGuiInTwitter.
+ */
 public class SearchGuiInTwitter {
 	
+	/** The twitter handler. */
 	private TwitterHandler twitterHandler;
+	
+	/** The frame. */
 	private JFrame frame;
 	
+	/**
+	 * Instantiates a new search gui in twitter.
+	 *
+	 * @param frameTitle the frame title
+	 */
 	public SearchGuiInTwitter(String frameTitle) {
 		frame = new JFrame(frameTitle);
 		frame.setSize(400, 100);
@@ -33,8 +44,11 @@ public class SearchGuiInTwitter {
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
+	
 	/**
-	 * Janela onde vamos pesquisar pela palavra chave que queremos
+	 * Adds the content table.
+	 *
+	 * @param table the table
 	 */
 	public void addContentTable(JTable table) {
 		twitterHandler=new TwitterHandler();
@@ -64,10 +78,18 @@ public class SearchGuiInTwitter {
 		frame.add(searchButton, BorderLayout.PAGE_END);
 	}
 
+	/**
+	 * Open.
+	 */
 	public void open() {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		
 		

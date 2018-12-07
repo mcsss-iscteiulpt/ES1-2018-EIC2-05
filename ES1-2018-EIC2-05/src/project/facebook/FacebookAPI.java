@@ -25,29 +25,47 @@ import com.restfb.types.FacebookType;
 import com.restfb.types.Post;
 import com.restfb.types.User;
 
+
+/**
+ * The Class FacebookAPI.
+ */
 public class FacebookAPI {
 	
+	/** The fb client. */
 	private FacebookClient fbClient;
 	
+	/**
+	 * Gets the fb client.
+	 *
+	 * @return the fb client
+	 */
 	public FacebookClient getFbClient() {
 		return fbClient;
 	}
 
 	
+	/** The extended access token. */
 	private String extendedAccessToken;
 	
 	
+	/** The me. */
 	public User me;
 
 	
+	/** The content. */
 	private ArrayList<String>content=new ArrayList<String>();
 	
+	/** The result. */
 	public Connection<Post> result;
 	
 	
+	/** The el. */
 	private static Element el;
 
 	
+	/**
+	 * Instantiates a new facebook API.
+	 */
 	@SuppressWarnings("deprecation")
 	public FacebookAPI() {
 		
@@ -86,6 +104,11 @@ public class FacebookAPI {
 	}
 
 	
+	/**
+	 * Gets the posts in general.
+	 *
+	 * @return the posts in general
+	 */
 	public Object[][] getPostsInGeneral() {
 
 		Object[][] data = { { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
@@ -122,6 +145,11 @@ public class FacebookAPI {
 	}
 
 	
+	/**
+	 * Gets the posts on the api.
+	 *
+	 * @return the posts on the api
+	 */
 	public Object[][] getPostsOnTheApi() {
 
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -152,6 +180,12 @@ public class FacebookAPI {
 	}
 
 	
+	/**
+	 * Convert time.
+	 *
+	 * @param time the time
+	 * @return the string
+	 */
 	public String convertTime(long time) {
 
 		SimpleDateFormat convert = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -161,6 +195,15 @@ public class FacebookAPI {
 		return postTime;
 	}
 
+	/**
+	 * Gets the posts on this hour.
+	 *
+	 * @param currentHour the current hour
+	 * @param currentDay the current day
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the posts on this hour
+	 */
 	public Object[][] getPostsOnThisHour(String currentHour, String currentDay, String currentMounth,
 			String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -209,6 +252,14 @@ public class FacebookAPI {
 	
 	
 	 
+	/**
+	 * Gets the posts on this day.
+	 *
+	 * @param currentDay the current day
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the posts on this day
+	 */
 	public Object[][] getPostsOnThisDay(String currentDay, String currentMounth, String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -249,6 +300,14 @@ public class FacebookAPI {
 
 	
 	
+	/**
+	 * Gets the posts on this week.
+	 *
+	 * @param currentWeek the current week
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the posts on this week
+	 */
 	public Object[][] getPostsOnThisWeek(int currentWeek, String currentMounth, String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -293,6 +352,13 @@ public class FacebookAPI {
 	
 	
 	
+	/**
+	 * Gets the posts on this mounth.
+	 *
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the posts on this mounth
+	 */
 	public Object[][] getPostsOnThisMounth(String currentMounth, String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -331,6 +397,12 @@ public class FacebookAPI {
 	
 
 	
+	/**
+	 * Searck word in facebook.
+	 *
+	 * @param word the word
+	 * @return the object[][]
+	 */
 	public Object[][] searckWordInFacebook(String word) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -344,11 +416,9 @@ public class FacebookAPI {
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
 				if (aPost.getMessage().contains(word)) {
-
 					data[i][0] = (convertTime(aPost.getUpdatedTime().getTime()));
 					data[i][1] = (aPost.getMessage());
 					data[i][2] = (me.getName());
-
 					i++;
 				}
 			}
@@ -358,15 +428,30 @@ public class FacebookAPI {
 
 	}
 	
+	/**
+	 * Gets the content.
+	 *
+	 * @return the content
+	 */
 	public ArrayList<String> getContent()	{
 		return content;
 	}
 	
+	/**
+	 * Gets the acess token.
+	 *
+	 * @return the acess token
+	 */
 	public String getAcessToken()	{
 		return extendedAccessToken;
 	}
 	
 	
+	/**
+	 * Post.
+	 *
+	 * @param message the message
+	 */
 	public void post (String message){		
 		FacebookType response = fbClient.publish(el.getElementsByTagName("groupid").item(0).getTextContent()+"/feed", FacebookType.class, Parameter.with("message", message));
 		

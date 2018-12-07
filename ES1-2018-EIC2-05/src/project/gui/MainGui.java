@@ -17,17 +17,29 @@ import project.mail.ReceiverOfMails;
 import project.twitter.TwitterHandler;
 
 
+
+/**
+ * The Class MainGui.
+ */
 public class MainGui {
 
+	/** The frame. */
 	protected JFrame frame;
+	
+	/** The twitter handler. */
 	protected static TwitterHandler twitterHandler;
+	
+	/** The mail handler. */
 	protected static ReceiverOfMails mailHandler;
+	
+	/** The facebook handler. */
 	protected static FacebookAPI facebookHandler;
 	
+
 	/**
-	 * construtor da GUI
-	 * 
-	 * @param frameTitle
+	 * Instantiates a new main gui.
+	 *
+	 * @param frameTitle the frame title
 	 */
 	public MainGui(String frameTitle) {
 		frame = new JFrame(frameTitle);
@@ -41,14 +53,18 @@ public class MainGui {
 		addContent();
 	}
 
+	/**
+	 * Gets the frame.
+	 *
+	 * @return the frame
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
+	
 	/**
-	 * conteudo da GUI: timeline de todas as interfaces menu para escolher qual
-	 * interface mostrar filtro para a timeline (n�o operacional) botao de search
-	 * para pesquisar as publica��es com aquela palavra chave(n�o operacional)
+	 * Adds the content.
 	 */
 	public void addContent() {
 		frame.setLayout(new BorderLayout());
@@ -224,17 +240,18 @@ public class MainGui {
 
 	}
 
+	
 	/**
-	 * Torna a GUI visivel
+	 * Open.
 	 */
 	public void open() {
 		frame.setVisible(true);
 	}
 
 	/**
-	 * Para executar a GUI
-	 * 
-	 * @param args
+	 * The main method.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		MainGui gui = new MainGui("BDA(BOM DIA ACADEMIA)");

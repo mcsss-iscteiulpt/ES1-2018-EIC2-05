@@ -17,10 +17,22 @@ import javax.swing.table.DefaultTableModel;
 import project.facebook.FacebookAPI;
 
 
+/**
+ * The Class SearchGuiInFacebook.
+ */
 public class SearchGuiInFacebook {
+	
+	/** The facebook API. */
 	private FacebookAPI facebookAPI;
+	
+	/** The frame. */
 	private JFrame frame;
 	
+	/**
+	 * Instantiates a new search gui in facebook.
+	 *
+	 * @param frameTitle the frame title
+	 */
 	public SearchGuiInFacebook(String frameTitle) {
 		frame = new JFrame(frameTitle);
 		frame.setSize(400, 100);
@@ -31,8 +43,11 @@ public class SearchGuiInFacebook {
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
+	
 	/**
-	 * Janela onde vamos pesquisar pela palavra chave que queremos
+	 * Adds the content table.
+	 *
+	 * @param table the table
 	 */
 	public void addContentTable(JTable table) {
 		facebookAPI=new FacebookAPI();
@@ -62,10 +77,18 @@ public class SearchGuiInFacebook {
 		frame.add(searchButton, BorderLayout.PAGE_END);
 	}
 
+	/**
+	 * Open.
+	 */
 	public void open() {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		SearchGuiInFacebook s=new SearchGuiInFacebook("");
 		s.addContentTable(null);

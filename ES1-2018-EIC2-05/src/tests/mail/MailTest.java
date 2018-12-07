@@ -10,26 +10,59 @@ import org.junit.Test;
 
 import project.mail.*;
 
+
+/**
+ * The Class MailTest.
+ */
 public class MailTest {
 
+	/** The receiver. */
 	private ReceiverOfMails receiver;
+	
+	/** The sender. */
 	private SenderOfMails sender;
 
+	/** The actual time stamp. */
 	String actualTimeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+	
+	/** The actual split time and date. */
 	String[] actualSplitTimeAndDate = actualTimeStamp.split(" ");
+	
+	/** The actual date. */
 	String actualDate = actualSplitTimeAndDate[0];
+	
+	/** The actual time. */
 	String actualTime = actualSplitTimeAndDate[1];
 
+	/** The actual split date. */
 	String[] actualSplitDate = actualDate.split("/");
+	
+	/** The actual mounth. */
 	String actualMounth = actualSplitDate[1];
+	
+	/** The actual year. */
 	String actualYear = actualSplitDate[0];
+	
+	/** The cal. */
 	Calendar cal = Calendar.getInstance();
+	
+	/** The actual week. */
 	int actualWeek = cal.get(Calendar.WEEK_OF_YEAR);
+	
+	/** The actual day. */
 	String actualDay = actualSplitDate[2];
 
+	/** The actual split time. */
 	String[] actualSplitTime = actualTime.split(":");
+	
+	/** The actual hour. */
 	String actualHour = actualSplitTime[0];
 
+	/**
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 		this.receiver = new ReceiverOfMails();
@@ -47,18 +80,27 @@ public class MailTest {
 		// Message messages[] = emailFolder.getMessages();
 	}
 
+	/**
+	 * Test receiver.
+	 */
 	@Test
 	public void testReceiver() {
 		assertNotNull("should not be null", receiver);
 		// fail("Not yet implemented");
 	}
 
+	/**
+	 * Test sender.
+	 */
 	@Test
 	public void testSender() {
 		assertNotNull("should not be null", sender);
 		// fail("Not yet implemented");
 	}
 
+	/**
+	 * Test receive mails in general.
+	 */
 	@Test
 	public void testReceiveMailsInGeneral() {
 
@@ -68,6 +110,9 @@ public class MailTest {
 
 	}
 
+	/**
+	 * Test receive mails in api.
+	 */
 	@Test
 	public void testReceiveMailsInApi() {
 
@@ -77,6 +122,9 @@ public class MailTest {
 
 	}
 
+	/**
+	 * Test receive mails in month.
+	 */
 	@Test
 	public void testReceiveMailsInMonth() {
 
@@ -86,6 +134,9 @@ public class MailTest {
 
 	}
 
+	/**
+	 * Test receive mails in week.
+	 */
 	@Test
 	public void testReceiveMailsInWeek() {
 
@@ -95,6 +146,9 @@ public class MailTest {
 		assertTrue("there are mails", receiver.getnEmailsWeek() > 0);
 	}
 
+	/**
+	 * Test receive mails in day.
+	 */
 	@Test
 	public void testReceiveMailsInDay() {
 
@@ -105,6 +159,9 @@ public class MailTest {
 
 	}
 
+	/**
+	 * Test receive mails in hour.
+	 */
 	@Test
 	public void testReceiveMailsInHour() {
 

@@ -17,11 +17,23 @@ import javax.swing.WindowConstants;
 
 import project.mail.SenderOfMails;
 
+
+/**
+ * The Class SendMailGui.
+ */
 public class SendMailGui {
 	
+	/** The sender. */
 	private SenderOfMails sender;
+	
+	/** The frame. */
 	private JFrame frame;
 	
+	/**
+	 * Instantiates a new send mail gui.
+	 *
+	 * @param frameTitle the frame title
+	 */
 	public SendMailGui(String frameTitle) {
 		frame = new JFrame(frameTitle);
 		frame.setSize(500, 200);
@@ -33,8 +45,9 @@ public class SendMailGui {
 		addContent();
 	}
 
+
 	/**
-	 * Janela onde vamos pesquisar pela palavra chave que queremos
+	 * Adds the content.
 	 */
 	public void addContent() {
 		JPanel center=new JPanel();
@@ -74,10 +87,18 @@ public class SendMailGui {
 		frame.add(endOfPage, BorderLayout.PAGE_END);
 	}	
 
+	/**
+	 * Open.
+	 */
 	public void open() {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		SendMailGui gui = new SendMailGui("BDA(BOM DIA ACADEMIA)");
 		gui.open();

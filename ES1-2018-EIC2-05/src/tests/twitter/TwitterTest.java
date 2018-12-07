@@ -17,23 +17,41 @@ import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TwitterTest.
+ */
 public class TwitterTest {
 
+	/** The twitterhandler. */
 	private TwitterHandler twitterhandler;
+	
+	/** The twitter. */
 	private Twitter twitter;
 	
+	/**
+	 * Sets the up.
+	 *
+	 * @throws Exception the exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 		this.twitterhandler = new TwitterHandler();
 		this.twitter = twitterhandler.getTwitter();
 	}
 
+	/**
+	 * Test twitter handler.
+	 */
 	@Test
 	public void testTwitterHandler() {
 		assertNotNull("should not be null", twitter);
 		//fail("Not yet implemented");
 	}
 
+	/**
+	 * Test tweets in general.
+	 */
 	@Test
 	public void testTweetsInGeneral() {
 		
@@ -49,6 +67,9 @@ public class TwitterTest {
 		//fail("Not yet implemented");
 	}
 	
+	/**
+	 * Test tweets on twitter API.
+	 */
 	@Test
 	public void testTweetsOnTwitterAPI() {
 		
@@ -64,6 +85,9 @@ public class TwitterTest {
 		//fail("Not yet implemented");
 	}
 
+	/**
+	 * Test send tweet.
+	 */
 	@Test
 	public void testSendTweet() {
 		
@@ -88,6 +112,9 @@ public class TwitterTest {
 		//fail("Not yet implemented");
 	}
 	
+	/**
+	 * Test get twitter.
+	 */
 	@Test
 	public void testGetTwitter() {
 		
@@ -95,6 +122,9 @@ public class TwitterTest {
 		
 	}	
 	
+	/**
+	 * Test convert time.
+	 */
 	@Test
 	public void testConvertTime() {
 		
@@ -121,6 +151,9 @@ public class TwitterTest {
 	}
 	
 	
+	/**
+	 * Test timestamps.
+	 */
 	@Test
 	public void testTimestamps() {
 		
@@ -146,6 +179,9 @@ public class TwitterTest {
 		
 	}	
 	
+	/**
+	 * Test get twitters on this hour.
+	 */
 	@Test
 	public void testGetTwittersOnThisHour() {
 		
@@ -189,6 +225,9 @@ public class TwitterTest {
 	}
 
 	
+	/**
+	 * Test get twitters on this day.
+	 */
 	@Test
 	public void testGetTwittersOnThisDay() {
 		
@@ -232,6 +271,9 @@ public class TwitterTest {
 	}
 	
 	
+	/**
+	 * Test get twitters on this week.
+	 */
 	@Test
 	public void testGetTwittersOnThisWeek() {
 		
@@ -265,6 +307,9 @@ public class TwitterTest {
 	}
 	
 	
+	/**
+	 * Test get twitters on this month.
+	 */
 	@Test
 	public void testGetTwittersOnThisMonth() {
 		
@@ -309,6 +354,9 @@ public class TwitterTest {
 		
 	}
 	
+	/**
+	 * Test search word in tweet.
+	 */
 	@Test
 	public void testSearchWordInTweet() {
 		
@@ -333,6 +381,9 @@ public class TwitterTest {
 		
 	}
 	
+	/**
+	 * Test get content.
+	 */
 	@Test
 	public void testGetContent() {
 		
