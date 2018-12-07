@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="BDA.ReceiverOfMails" x="69" y="334">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="BDA.SearchGuiInMail" x="123" y="617">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="BDA.ReceiverOfMails"
+            endpointName="receiverOfMails" kind="Simple"/>
+    </Class>
+    <Class name="BDA.TwitterHandler" x="486" y="516">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="BDA.SenderOfMails" x="931" y="555">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="BDA.SendMailGui" x="877" y="429">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="BDA.SenderOfMails"
+            endpointName="sender" kind="Simple"/>
+    </Class>
+    <Class name="BDA.TwitterGui" x="301" y="135">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="BDA.TwitterHandler"
+            endpointName="twitterHandler" kind="Simple"/>
+        <Communication destinationClassName="BDA.ContentGui"/>
+        <Communication destinationClassName="BDA.TwitterHandler"/>
+    </Class>
+    <Class name="BDA.SearchGuiInTwitter" x="417" y="211">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="BDA.TwitterHandler"
+            endpointName="twitterHandler" kind="Simple"/>
+    </Class>
+    <Class name="BDA.ContentGui" x="1190" y="58">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="BDA.GmailGui" x="1083" y="151">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="BDA.ReceiverOfMails"
+            endpointName="mailReceiveMails" kind="Simple"/>
+        <Communication destinationClassName="BDA.ContentGui"/>
+        <Communication destinationClassName="BDA.ReceiverOfMails"/>
+    </Class>
+    <Class name="BDA.FacebookAPI" x="1067" y="299">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="BDA.FacebookGui" x="999" y="57">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="BDA.ContentGui"/>
+        <Communication destinationClassName="BDA.FacebookAPI"/>
+    </Class>
+    <Class name="BDA.AnalyseData" x="14" y="12">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="BDA.TwitterHandler"
+            endpointName="twitterHandler" kind="Simple"/>
+        <Association destinationClassName="BDA.ReceiverOfMails"
+            endpointName="mailHandler" kind="Simple"/>
+        <Association destinationClassName="BDA.FacebookAPI"
+            endpointName="facebookHandler" kind="Simple"/>
+        <Communication destinationClassName="BDA.FacebookAPI"/>
+        <Communication destinationClassName="BDA.ReceiverOfMails"/>
+        <Communication destinationClassName="BDA.TwitterHandler"/>
+    </Class>
+    <Class name="BDA.PostGui" x="861" y="55">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="BDA.FacebookAPI"
+            endpointName="facebookhandler" kind="Simple"/>
+    </Class>
+    <Class name="BDA.SearchGuiInFacebook" x="663" y="29">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="BDA.FacebookAPI"
+            endpointName="facebookAPI" kind="Simple"/>
+    </Class>
+    <Class name="BDA.MainGui" x="473" y="25">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="BDA.TwitterHandler"
+            endpointName="twitterHandler" kind="Simple"/>
+        <Association destinationClassName="BDA.ReceiverOfMails"
+            endpointName="mailHandler" kind="Simple"/>
+        <Association destinationClassName="BDA.FacebookAPI"
+            endpointName="facebookHandler" kind="Simple"/>
+        <Communication destinationClassName="BDA.AnalyseData"/>
+    </Class>
+    <Class name="BDA.TweetGui" x="631" y="355">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="BDA.TwitterHandler"
+            endpointName="twitterHandler" kind="Simple"/>
+    </Class>
+</ClassDiagram>
