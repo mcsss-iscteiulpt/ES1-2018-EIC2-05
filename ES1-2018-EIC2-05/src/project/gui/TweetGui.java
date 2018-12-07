@@ -31,6 +31,7 @@ public class TweetGui  {
 		addContent();
 	}
 
+
 	/**
 	 * Janela onde vamos pesquisar pela palavra chave que queremos
 	 */

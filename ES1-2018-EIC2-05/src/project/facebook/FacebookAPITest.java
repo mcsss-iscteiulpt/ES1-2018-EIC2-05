@@ -20,7 +20,6 @@ class FacebookAPITest {
 	@Before
 	public void setUp() throws Exception {
 		this.facebookAPI = new FacebookAPI();
-		this.fbClient = facebookAPI.getFbClient();
 	}
 
 	@Test

@@ -32,6 +32,7 @@ public class GmailGui  {
 	public JFrame frame;
 	private ReceiverOfMails mailReceiveMails;
 	
+
 	public GmailGui(String frameTitle) {
 		mailReceiveMails=new ReceiverOfMails();
 		frame = new JFrame(frameTitle);

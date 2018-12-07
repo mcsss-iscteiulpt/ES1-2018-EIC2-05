@@ -12,10 +12,13 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+import project.facebook.FacebookAPI;
+
 
 public class PostGui  {
 
 	private JFrame frame;
+	private FacebookAPI facebookhandler;
 	
 	public PostGui(String frameTitle) {
 		frame = new JFrame(frameTitle);
@@ -41,6 +44,7 @@ public class PostGui  {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				facebookhandler.post();
 				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
