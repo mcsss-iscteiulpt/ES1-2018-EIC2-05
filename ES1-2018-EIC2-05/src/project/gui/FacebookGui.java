@@ -220,6 +220,7 @@ public class FacebookGui {
 				}
 			}
 		});
+		
 
 		frame.add(bda, BorderLayout.PAGE_END);
 		frame.add(menuBar, BorderLayout.PAGE_START);

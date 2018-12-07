@@ -28,7 +28,7 @@ public class TwitterHandler {
 	private ArrayList<String>content;
 
 	/**
-	 * Construtor da classe TwitterHandler: cria a instance necessária, através dos
+	 * Construtor da classe TwitterHandler: cria a instance necessï¿½ria, atravï¿½s dos
 	 * acesstokens e api keys e segredos, para poder usar as funcionalidades do
 	 * twitter
 	 */
@@ -175,11 +175,11 @@ public class TwitterHandler {
 	}
 
 	/**
-	 * Converte o tempo de publicação do tweet que está em millisegundos para o
+	 * Converte o tempo de publicaï¿½ï¿½o do tweet que estï¿½ em millisegundos para o
 	 * formato abaixo
 	 * 
 	 * @param time
-	 * @return o tempo da publicação do tweet no formato hh:mm MM/dd/yyyy
+	 * @return o tempo da publicaï¿½ï¿½o do tweet no formato hh:mm MM/dd/yyyy
 	 */
 	public String convertTime(long time) {
 
