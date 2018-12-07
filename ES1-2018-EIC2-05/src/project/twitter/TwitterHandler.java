@@ -222,6 +222,7 @@ public class TwitterHandler {
 	 */
 	public Object[][] getTwittersOnThisHour(String currentHour, String currentDay, String currentMounth,
 			String currentYear) {
+		content=new ArrayList<String>();
 		Object[][] data = { { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
@@ -255,6 +256,7 @@ public class TwitterHandler {
 					data[i][1] = (status.getText());
 					data[i][2] = (status.getUser().getName());
 				}
+				content.add(status.getText());
 				i++;
 
 			}
@@ -275,6 +277,7 @@ public class TwitterHandler {
 	 * @return os tweets que foram publicados no ultimo dia
 	 */
 	public Object[][] getTwittersOnThisDay(String currentDay, String currentMounth, String currentYear) {
+		content=new ArrayList<String>();
 		Object[][] data = { { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
@@ -303,6 +306,7 @@ public class TwitterHandler {
 					data[i][1] = (status.getText());
 					data[i][2] = (status.getUser().getName());
 				}
+				content.add(status.getText());
 				i++;
 
 			}
@@ -322,6 +326,7 @@ public class TwitterHandler {
 	 * @return os tweets que foram pulicados no ultimo mes
 	 */
 	public Object[][] getTwittersOnThisMounth(String currentMounth, String currentYear) {
+		content=new ArrayList<String>();
 		Object[][] data = { { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
@@ -347,6 +352,7 @@ public class TwitterHandler {
 					data[i][1] = (status.getText());
 					data[i][2] = (status.getUser().getName());
 				}
+				content.add(status.getText());
 				i++;
 
 			}
@@ -367,6 +373,7 @@ public class TwitterHandler {
 	 * @return os tweets que foram publicados na ultima semana
 	 */
 	public Object[][] getTwittersOnThisWeek(int currentWeek, String currentMounth, String currentYear) {
+		content=new ArrayList<String>();
 
 		Object[][] data = { { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
@@ -399,7 +406,9 @@ public class TwitterHandler {
 					data[i][1] = (status.getText());
 					data[i][2] = (status.getUser().getName());
 				}
+				content.add(status.getText());
 				i++;
+				
 			}
 		}
 
@@ -416,6 +425,7 @@ public class TwitterHandler {
 	 * @return os tweets que continham a palavra pesquisada
 	 */
 	public Object[][] searchWordInTweet(String word) {
+		content=new ArrayList<String>();
 		Object[][] data = { { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
 				{ "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" }, { "", "", "" },
@@ -434,6 +444,7 @@ public class TwitterHandler {
 					data[i][1] = (status.getText());
 					data[i][2] = (status.getUser().getName());
 				}
+				content.add(status.getText());
 				i++;
 
 			}
