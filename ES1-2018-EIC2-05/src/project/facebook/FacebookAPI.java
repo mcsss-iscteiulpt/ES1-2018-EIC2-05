@@ -39,6 +39,7 @@ public class FacebookAPI {
 	private String extendedAccessToken;
 	
 	/**
+	 *
 	 * instance do User Graph API.
 	 * 
 	 */
@@ -418,20 +419,10 @@ public class FacebookAPI {
 		return content;
 	}
 	
-	public void post (){
-
+	public void post (String message){		
+		FacebookType response = fbClient.publish(groupID+"/feed", FacebookType.class, Parameter.with("message", message));
 		
-		Scanner s = new Scanner(System.in);
-		
-		System.out.println("escreva o post: \n");
-		
-		String msg = s.nextLine();
-		
-		FacebookType response = fbClient.publish(groupID+"/feed", FacebookType.class, Parameter.with("message", msg));
-		
-		System.out.println("fb.com/"+response.getId());
-		
-		
+		System.out.println("novo post em fb.com/"+response.getId());
 	}
 	
 	

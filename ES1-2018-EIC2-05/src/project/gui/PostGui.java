@@ -35,21 +35,23 @@ public class PostGui  {
 	 * Janela onde vamos pesquisar pela palavra chave que queremos
 	 */
 	public void addContent() {
+		
+		facebookhandler = new FacebookAPI();
 		frame.setLayout(new BorderLayout());
-
-		JTextField tweetText = new JTextField();
+		
+		JTextField postText = new JTextField();
 
 		JButton postButton = new JButton("Post !!!");
 		postButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				facebookhandler.post();
+				facebookhandler.post(postText.getText());
 				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
 
-		frame.add(tweetText, BorderLayout.CENTER);
+		frame.add(postText, BorderLayout.CENTER);
 		frame.add(postButton, BorderLayout.PAGE_END);
 
 	}

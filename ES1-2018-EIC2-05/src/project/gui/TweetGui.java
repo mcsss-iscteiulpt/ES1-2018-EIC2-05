@@ -47,7 +47,7 @@ public class TweetGui  {
 			public void actionPerformed(ActionEvent e) {
 				twitterHandler.sendTweet(tweetText.getText());
 				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-			}
+			} 
 		});
 
 		frame.add(tweetText, BorderLayout.CENTER);

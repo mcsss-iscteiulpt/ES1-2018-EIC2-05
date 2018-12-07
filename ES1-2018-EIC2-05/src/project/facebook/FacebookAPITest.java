@@ -1,21 +1,15 @@
 package project.facebook;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
-
-import com.restfb.FacebookClient;
-
-import project.twitter.TwitterHandler;
-import twitter4j.Twitter;
 
 
 class FacebookAPITest {
 	
 	private FacebookAPI facebookAPI;
-	private FacebookClient fbClient;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -24,8 +18,15 @@ class FacebookAPITest {
 
 	@Test
 	public void testFacebookAPI() {
-		assertNotNull("should not be null", fbClient);
+		assertNotNull("should not be null", facebookAPI);
 		//fail("Not yet implemented");
+	}
+	
+	public void testGetPostsInGeneral() {
+		
+		
+		
+		assertArrayEquals(expected, actual);
 	}
 	
 	
