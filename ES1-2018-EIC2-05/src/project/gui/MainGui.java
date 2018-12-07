@@ -49,8 +49,8 @@ public class MainGui {
 
 	/**
 	 * conteudo da GUI: timeline de todas as interfaces menu para escolher qual
-	 * interface mostrar filtro para a timeline (não operacional) botao de search
-	 * para pesquisar as publicações com aquela palavra chave(não operacional)
+	 * interface mostrar filtro para a timeline (nï¿½o operacional) botao de search
+	 * para pesquisar as publicaï¿½ï¿½es com aquela palavra chave(nï¿½o operacional)
 	 */
 	public void addContent() {
 		frame.setLayout(new BorderLayout());

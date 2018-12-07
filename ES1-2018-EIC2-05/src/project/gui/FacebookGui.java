@@ -44,7 +44,7 @@ public class FacebookGui {
 	/**
 	 * GUI de cada interface
 	 * 
-	 * @param nameOfAPI
+	 * @param nameOfAPI§
 	 */
 	public void addContent(String nameOfAPI) {
 		frame.remove(frame);
@@ -97,6 +97,7 @@ public class FacebookGui {
 		String[] columnNames = { "Time", "Content", "User" };
 
 		FacebookAPI facebookAPI = new FacebookAPI();
+		//facebookAPI.post();
 		DefaultTableModel model = new DefaultTableModel(facebookAPI.getPostsOnTheApi(), columnNames);
 		JTable table = new JTable(facebookAPI.getPostsOnTheApi(), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
@@ -113,8 +114,8 @@ public class FacebookGui {
 		JPanel eastPanel = new JPanel();
 		eastPanel.setLayout(new GridLayout(2, 1));
 
-		JButton tweetButton = new JButton("Post");
-		tweetButton.addActionListener(new ActionListener() {
+		JButton postButton = new JButton("Post");
+		postButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -124,7 +125,7 @@ public class FacebookGui {
 			}
 		});
 
-		eastPanel.add(tweetButton);
+		eastPanel.add(postButton);
 
 		JButton refreshButton = new JButton("Refresh");
 		refreshButton.addActionListener(new ActionListener() {
@@ -234,7 +235,7 @@ public class FacebookGui {
 
 	public static void main(String[] args) {
 		FacebookGui gui = new FacebookGui("BDA(BOM DIA ACADEMIA)");
-		gui.addContent("Twitter");
+		gui.addContent("Facebook");
 		gui.open();
 	}
 
