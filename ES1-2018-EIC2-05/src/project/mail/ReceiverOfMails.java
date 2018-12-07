@@ -87,7 +87,7 @@ public class ReceiverOfMails {
 				//				System.out.println("Email Number: " + i);
 				data[(messages.length-1)-i][2] = message.getSubject();
 				//				System.out.println("Subject: " + message.getSubject());
-				data[(messages.length-1)-i][4] = message.getFrom();
+				data[(messages.length-1)-i][4] = message.getFrom()[0];
 				//				System.out.println("From: " + message.getFrom()[0]);
 				data[(messages.length-1)-i][1] = convertTime(message.getSentDate().getTime());
 				//				System.out.println("Sent Date: " + message.getSentDate());
