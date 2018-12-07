@@ -1,5 +1,7 @@
 package project.mail;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,12 +10,53 @@ import java.util.TimeZone;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.jsoup.Jsoup;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 public class ReceiverOfMails {
+
 	
 	private ArrayList<String>content=new ArrayList<String>();
 	
+
+	private static Element e;
+
+	public ReceiverOfMails() {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+		DocumentBuilder builder = null;
+		try {
+			builder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Document document = null;
+		try {
+			document = builder.parse(new File("config.xml"));
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		document.getDocumentElement().normalize();
+
+		NodeList nList = document.getElementsByTagName("email");
+
+		e = (Element) nList.item(0);
+
+	}
+
 	public Object[][] receiveMailsInGeneral(String username, String password)	{
 		Object[][] data = { { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
 				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
@@ -41,15 +84,15 @@ public class ReceiverOfMails {
 			for (int i = 0; i < messages.length; i++) {
 				Message message = messages[i];
 				data[i][0] = "Mail";
-//				System.out.println("Email Number: " + i);
+				//				System.out.println("Email Number: " + i);
 				data[(messages.length-1)-i][2] = message.getSubject();
-//				System.out.println("Subject: " + message.getSubject());
+				//				System.out.println("Subject: " + message.getSubject());
 				data[(messages.length-1)-i][4] = message.getFrom();
-//				System.out.println("From: " + message.getFrom()[0]);
+				//				System.out.println("From: " + message.getFrom()[0]);
 				data[(messages.length-1)-i][1] = convertTime(message.getSentDate().getTime());
-//				System.out.println("Sent Date: " + message.getSentDate());
+				//				System.out.println("Sent Date: " + message.getSentDate());
 				try {
-//					System.out.println("Content: " + getTextFromMessage(message));
+					//					System.out.println("Content: " + getTextFromMessage(message));
 					data[(messages.length-1)-i][3] = getTextFromMessage(message);
 
 				} catch (Exception e) {
@@ -96,15 +139,15 @@ public class ReceiverOfMails {
 			Message messages[] = emailFolder.getMessages();
 			for (int i = 0; i < messages.length; i++) {
 				Message message = messages[i];
-//				System.out.println("Email Number: " + i);
+				//System.out.println("Email Number: " + i);
 				data[(messages.length-1)-i][1] = message.getSubject();
-//				System.out.println("Subject: " + message.getSubject());
+				//System.out.println("Subject: " + message.getSubject());
 				data[(messages.length-1)-i][3] = message.getFrom();
-//				System.out.println("From: " + message.getFrom()[0]);
+				//System.out.println("From: " + message.getFrom()[0]);
 				data[(messages.length-1)-i][0] = convertTime(message.getSentDate().getTime());
-//				System.out.println("Sent Date: " + message.getSentDate());
+				//System.out.println("Sent Date: " + message.getSentDate());
 				try {
-//					System.out.println("Content: " + getTextFromMessage(message));
+					//System.out.println("Content: " + getTextFromMessage(message));
 					data[(messages.length-1)-i][2] = getTextFromMessage(message);
 					content.add(getTextFromMessage(message));
 				} catch (Exception e) {
@@ -427,6 +470,7 @@ public class ReceiverOfMails {
 		return data;
 	}
 	
+
 	
 	public Object[][] searchWordInGmail(String word)	{
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -493,5 +537,10 @@ public class ReceiverOfMails {
 	public static void main(String[] args) {
 		ReceiverOfMails rc=new ReceiverOfMails();
 		rc.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15");
+
+	}	
+	public Element getEl() {
+		return e;
+
 	}
 }
