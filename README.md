@@ -3,3 +3,6 @@ Márcio Simões, nº65930, EIC1
 Pedro Borralho, nº 82889, EIC2
 Mahomed Hameed, nº60850, EIC2
 Vasco Branco, nº78691, EIC2
+
+
+link - https://youtu.be/SZqSHmCm3is
