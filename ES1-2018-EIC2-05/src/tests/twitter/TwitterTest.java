@@ -48,7 +48,7 @@ public class TwitterTest {
 		assertSame("should be same", 20, status.size());
 		//fail("Not yet implemented");
 	}
-
+	
 	@Test
 	public void testTweetsOnTwitterAPI() {
 		

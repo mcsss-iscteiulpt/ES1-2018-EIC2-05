@@ -20,14 +20,41 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ReceiverOfMails.
+ */
 public class ReceiverOfMails {
 
 	
+	/** The content. */
 	private ArrayList<String>content=new ArrayList<String>();
 	
 
+	/** The e. */
 	private static Element e;
+	
+	/** The n emails general. */
+	public int nEmailsGeneral;
+	
+	/** The n emails API. */
+	public int nEmailsAPI;
+	
+	/** The n emails hour. */
+	public int nEmailsHour;
+	
+	/** The n emails day. */
+	public int nEmailsDay;
+	
+	/** The n emails month. */
+	public int nEmailsMonth;
+	
+	/** The n emails week. */
+	public int nEmailsWeek;
 
+	/**
+	 * Instantiates a new receiver of mails.
+	 */
 	public ReceiverOfMails() {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -57,6 +84,13 @@ public class ReceiverOfMails {
 
 	}
 
+	/**
+	 * Receive mails in general.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @return the object[][]
+	 */
 	public Object[][] receiveMailsInGeneral(String username, String password)	{
 		Object[][] data = { { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
 				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
@@ -82,6 +116,7 @@ public class ReceiverOfMails {
 			emailFolder.open(Folder.READ_ONLY);
 			Message messages[] = emailFolder.getMessages();
 			for (int i = 0; i < messages.length; i++) {
+				nEmailsGeneral++;
 				Message message = messages[i];
 				data[i][0] = "Mail";
 				//				System.out.println("Email Number: " + i);
@@ -94,6 +129,7 @@ public class ReceiverOfMails {
 				try {
 					//					System.out.println("Content: " + getTextFromMessage(message));
 					data[(messages.length-1)-i][3] = getTextFromMessage(message);
+					
 
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -113,6 +149,13 @@ public class ReceiverOfMails {
 
 	}
 
+	/**
+	 * Receive mails on api.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @return the object[][]
+	 */
 	public Object[][] receiveMailsOnApi(String username, String password) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -150,6 +193,7 @@ public class ReceiverOfMails {
 					//System.out.println("Content: " + getTextFromMessage(message));
 					data[(messages.length-1)-i][2] = getTextFromMessage(message);
 					content.add(getTextFromMessage(message));
+					nEmailsAPI++;
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -169,6 +213,13 @@ public class ReceiverOfMails {
 
 	}
 
+	/**
+	 * Gets the text from message.
+	 *
+	 * @param message the message
+	 * @return the text from message
+	 * @throws Exception the exception
+	 */
 	public static String getTextFromMessage(Message message) throws Exception {
 		if (message.isMimeType("text/plain")) {
 			return message.getContent().toString();
@@ -193,6 +244,12 @@ public class ReceiverOfMails {
 		return "";
 	}
 
+	/**
+	 * Convert time.
+	 *
+	 * @param time the time
+	 * @return the string
+	 */
 	public String convertTime(long time) {
 
 		SimpleDateFormat convert = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -202,6 +259,17 @@ public class ReceiverOfMails {
 		return mailSendTime;
 	}
 
+	/**
+	 * Gets the mails on this hour.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param currentHour the current hour
+	 * @param currentDay the current day
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the mails on this hour
+	 */
 	public Object[][] getMailsOnThisHour(String username, String password, String currentHour, String currentDay,
 			String currentMounth, String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -252,6 +320,7 @@ public class ReceiverOfMails {
 					data[(messages.length-1)-i][0] = convertTime(message.getSentDate().getTime());
 					try {
 						data[(messages.length-1)-i][2] = getTextFromMessage(message);
+						nEmailsHour++;
 
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -272,6 +341,16 @@ public class ReceiverOfMails {
 		return data;
 	}
 
+	/**
+	 * Gets the mails on this day.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param currentDay the current day
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the mails on this day
+	 */
 	public Object[][] getMailsOnThisDay(String username, String password, String currentDay, String currentMounth,
 			String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -318,6 +397,7 @@ public class ReceiverOfMails {
 					data[(messages.length-1)-i][0] = convertTime(message.getSentDate().getTime());
 					try {
 						data[(messages.length-1)-i][2] = getTextFromMessage(message);
+						nEmailsDay++;
 
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -338,6 +418,15 @@ public class ReceiverOfMails {
 		return data;
 	}
 
+	/**
+	 * Gets the mails on this mounth.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the mails on this mounth
+	 */
 	public Object[][] getMailsOnThisMounth(String username, String password, String currentMounth, String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -380,6 +469,7 @@ public class ReceiverOfMails {
 					data[(messages.length-1)-i][0] = convertTime(message.getSentDate().getTime());
 					try {
 						data[(messages.length-1)-i][2] = getTextFromMessage(message);
+						nEmailsMonth++;
 
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -400,6 +490,16 @@ public class ReceiverOfMails {
 		return data;
 	}
 
+	/**
+	 * Gets the mails on this week.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param currentWeek the current week
+	 * @param currentMounth the current mounth
+	 * @param currentYear the current year
+	 * @return the mails on this week
+	 */
 	public Object[][] getMailsOnThisWeek(String username, String password, int currentWeek, String currentMounth,
 			String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -472,6 +572,12 @@ public class ReceiverOfMails {
 	
 
 	
+	/**
+	 * Search word in gmail.
+	 *
+	 * @param word the word
+	 * @return the object[][]
+	 */
 	public Object[][] searchWordInGmail(String word)	{
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -530,17 +636,96 @@ public class ReceiverOfMails {
 		return data;
 	}
 
+	/**
+	 * Gets the content.
+	 *
+	 * @return the content
+	 */
 	public ArrayList<String> getContent()	{
 		return content;
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		ReceiverOfMails rc=new ReceiverOfMails();
 		rc.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15");
 
 	}	
+	
+	/**
+	 * Gets the el.
+	 *
+	 * @return the el
+	 */
 	public Element getEl() {
 		return e;
 
+	}
+
+	/**
+	 * Gets the e.
+	 *
+	 * @return the e
+	 */
+	public static Element getE() {
+		return e;
+	}
+
+	/**
+	 * Gets the n emails general.
+	 *
+	 * @return the n emails general
+	 */
+	public int getnEmailsGeneral() {
+		return nEmailsGeneral;
+	}
+
+	/**
+	 * Gets the n emails API.
+	 *
+	 * @return the n emails API
+	 */
+	public int getnEmailsAPI() {
+		return nEmailsAPI;
+	}
+
+	/**
+	 * Gets the n emails hour.
+	 *
+	 * @return the n emails hour
+	 */
+	public int getnEmailsHour() {
+		return nEmailsHour;
+	}
+
+	/**
+	 * Gets the n emails day.
+	 *
+	 * @return the n emails day
+	 */
+	public int getnEmailsDay() {
+		return nEmailsDay;
+	}
+
+	/**
+	 * Gets the n emails month.
+	 *
+	 * @return the n emails month
+	 */
+	public int getnEmailsMonth() {
+		return nEmailsMonth;
+	}
+
+	/**
+	 * Gets the n emails week.
+	 *
+	 * @return the n emails week
+	 */
+	public int getnEmailsWeek() {
+		return nEmailsWeek;
 	}
 }

@@ -117,8 +117,8 @@ public class GmailGui  {
 
 		
 		
-		DefaultTableModel model = new DefaultTableModel(mailReceiveMails.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15"), columnNames);
-		JTable table = new JTable(mailReceiveMails.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15"), columnNames);
+		DefaultTableModel model = new DefaultTableModel(mailReceiveMails.receiveMailsOnApi(mailReceiveMails.getEl().getElementsByTagName("username").item(0).getTextContent(), mailReceiveMails.getEl().getElementsByTagName("password").item(0).getTextContent()), columnNames);
+		JTable table = new JTable(mailReceiveMails.receiveMailsOnApi(mailReceiveMails.getEl().getElementsByTagName("username").item(0).getTextContent(), mailReceiveMails.getEl().getElementsByTagName("password").item(0).getTextContent()), columnNames);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
 		table.setFillsViewportHeight(true);
 
@@ -151,7 +151,7 @@ public class GmailGui  {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				table.setModel(model);
-				model.setDataVector(mailReceiveMails.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15"), columnNames);
+				model.setDataVector(mailReceiveMails.receiveMailsOnApi(mailReceiveMails.getEl().getElementsByTagName("username").item(0).getTextContent(), mailReceiveMails.getEl().getElementsByTagName("password").item(0).getTextContent()), columnNames);
 				table.repaint();
 			}
 		});
@@ -163,7 +163,7 @@ public class GmailGui  {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				table.setModel(model);
-				model.setDataVector(mailReceiveMails.getMailsOnThisHour("es1.eic2.5@gmail.com", "MiguelNeto15",actualHour,actualDay,actualMounth,actualYear), columnNames);
+				model.setDataVector(mailReceiveMails.getMailsOnThisHour(mailReceiveMails.getEl().getElementsByTagName("username").item(0).getTextContent(), mailReceiveMails.getEl().getElementsByTagName("password").item(0).getTextContent(),actualHour,actualDay,actualMounth,actualYear), columnNames);
 				table.repaint();
 			}
 		});
@@ -173,7 +173,7 @@ public class GmailGui  {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				table.setModel(model);
-				model.setDataVector(mailReceiveMails.getMailsOnThisDay("es1.eic2.5@gmail.com", "MiguelNeto15",actualDay,actualMounth,actualYear), columnNames);
+				model.setDataVector(mailReceiveMails.getMailsOnThisDay(mailReceiveMails.getEl().getElementsByTagName("username").item(0).getTextContent(), mailReceiveMails.getEl().getElementsByTagName("password").item(0).getTextContent(),actualDay,actualMounth,actualYear), columnNames);
 				table.repaint();
 			}
 		});
@@ -183,7 +183,7 @@ public class GmailGui  {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				table.setModel(model);
-				model.setDataVector(mailReceiveMails.getMailsOnThisWeek("es1.eic2.5@gmail.com", "MiguelNeto15",actualWeek,actualMounth,actualYear), columnNames);
+				model.setDataVector(mailReceiveMails.getMailsOnThisWeek(mailReceiveMails.getEl().getElementsByTagName("username").item(0).getTextContent(), mailReceiveMails.getEl().getElementsByTagName("password").item(0).getTextContent(),actualWeek,actualMounth,actualYear), columnNames);
 				table.repaint();
 			}
 		});
@@ -193,7 +193,7 @@ public class GmailGui  {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				table.setModel(model);
-				model.setDataVector(mailReceiveMails.getMailsOnThisMounth("es1.eic2.5@gmail.com", "MiguelNeto15",actualMounth,actualYear), columnNames);
+				model.setDataVector(mailReceiveMails.getMailsOnThisMounth(mailReceiveMails.getEl().getElementsByTagName("username").item(0).getTextContent(), mailReceiveMails.getEl().getElementsByTagName("password").item(0).getTextContent(),actualMounth,actualYear), columnNames);
 				table.repaint();
 			}
 		});
@@ -203,7 +203,7 @@ public class GmailGui  {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				table.setModel(model);
-				model.setDataVector(mailReceiveMails.receiveMailsOnApi("es1.eic2.5@gmail.com", "MiguelNeto15"), columnNames);
+				model.setDataVector(mailReceiveMails.receiveMailsOnApi(mailReceiveMails.getEl().getElementsByTagName("username").item(0).getTextContent(), mailReceiveMails.getEl().getElementsByTagName("password").item(0).getTextContent()), columnNames);
 				table.repaint();
 				
 			}

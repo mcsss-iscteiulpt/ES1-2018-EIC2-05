@@ -15,10 +15,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SenderOfMails.
+ */
 public class SenderOfMails {
 	
+	/** The e. */
 	private Element e;
 
+	/**
+	 * Instantiates a new sender of mails.
+	 */
 	public SenderOfMails() {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -48,6 +56,13 @@ public class SenderOfMails {
 
 	}
 
+	/**
+	 * Send mail.
+	 *
+	 * @param toText the to text
+	 * @param subjectText the subject text
+	 * @param messageText the message text
+	 */
 	public void sendMail(String toText, String subjectText, String messageText) {
 
 		Properties properties = new Properties();
