@@ -1,11 +1,21 @@
 package project.facebook;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Scanner;
 import java.util.TimeZone;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
@@ -17,79 +27,71 @@ import com.restfb.types.User;
 
 public class FacebookAPI {
 	
-	/**
-	 * instance do Facebook Graph API client.
-	 * 
-	 */
 	private FacebookClient fbClient;
 	
-	/**
-	 * getter do Facebook Graph API client.
-	 * 
-	 */
 	public FacebookClient getFbClient() {
 		return fbClient;
 	}
 
-	/**
-	 * Graph API access token.
-	 * extended para extender a validade do token de 1h para 1 mes.
-	 * 
-	 */
+	
 	private String extendedAccessToken;
 	
-	/**
-	 *
-	 * instance do User Graph API.
-	 * 
-	 */
+	
 	public User me;
 
-	/**
-	 * Codigo do Grupo BDA Facebook onde o utilizador vai postar e buscar posts.
-	 * 
-	 */
-	private String groupID ="1176283292538810";
 	
-	/**
-	 * ???
-	 */
 	private ArrayList<String>content=new ArrayList<String>();
 	
-	/**
-	 * Conexao e lista dos posts obtido através da conexao do cliente do facebook.
-	 * 
-	 */
 	public Connection<Post> result;
+	
+	
+	private static Element el;
 
-	/**
-	 * Construtor da classe FacebookAPI:
-	 * cria a instance necessaria, atraves dos acess tokens para poder recolher informacoes e usar as funcionalidades do Facebook.
-	 *
-	 */
+	
 	@SuppressWarnings("deprecation")
 	public FacebookAPI() {
 		
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+		DocumentBuilder builder = null;
+		try {
+			builder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Document document = null;
+		try {
+			document = builder.parse(new File("config.xml"));
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		document.getDocumentElement().normalize();
+
+		NodeList nList = document.getElementsByTagName("facebook");
+
+		el = (Element) nList.item(0);
 		
-		extendedAccessToken = "EAAFIBMuA8iABAArep5j6oUJlBV0knAu4Lt5ZBX5S2BYSek70KTw43usBoIRrjnq8Jd3KVCY9zX69b4zKbPzLQiRh7SEkiYv1nu0oNgZCdCGVYZCzhbKjzdpNkhZAeli9zWi7gRiBu72hegnJ6AiRh644esze0aq2myxIyCDPyNfhZBBZCcMgT7";
-		fbClient = new DefaultFacebookClient(extendedAccessToken);
+		fbClient = new DefaultFacebookClient(el.getElementsByTagName("accesstoken").item(0).getTextContent());
 		me = fbClient.fetchObject ("me", User.class);
 		
-		result = fbClient.fetchConnection(groupID+"/feed", Post.class);
+		result = fbClient.fetchConnection(el.getElementsByTagName("groupid").item(0).getTextContent()+"/feed", Post.class);
 
 		
 	}
 
-	/**
-	 * Devolve os posts do nosso grupo do facebook, na nossa timeline geral da API.
-	 * @return posts
-	 *
-	 */
+	
 	public Object[][] getPostsInGeneral() {
 
 		Object[][] data = { { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
 				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
 				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
+	
 				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
 				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
 				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
@@ -119,11 +121,7 @@ public class FacebookAPI {
 
 	}
 
-	/**
-	 * Devolve os posts do nosso grupo do facebook, na nossa timeline especifica da API.
-	 * @return posts
-	 *
-	 */
+	
 	public Object[][] getPostsOnTheApi() {
 
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -153,16 +151,7 @@ public class FacebookAPI {
 
 	}
 
-	/**
-	 * Converte o formato da hora dada pelo Facebook para o formato geral.
-	 * da aplicação BDA
-	 * 
-	 * @param time
-	 * 			hora do post no formato original.
-	 * 
-	 * @return posts
-	 *
-	 */
+	
 	public String convertTime(long time) {
 
 		SimpleDateFormat convert = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -172,18 +161,6 @@ public class FacebookAPI {
 		return postTime;
 	}
 
-	/**
-	 * Devolve os posts do nosso grupo do facebook, da ultima hora, na nossa timeline especifica da API.
-	 * 
-	 * @param currentHour
-	 * @param currentDay
-	 * @param currentMounth
-	 * @param currentYear
-	 * 
-	 * 
-	 * @return posts
-	 *
-	 */
 	public Object[][] getPostsOnThisHour(String currentHour, String currentDay, String currentMounth,
 			String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -230,16 +207,8 @@ public class FacebookAPI {
 	}
 
 	
-	/**
-	 * Devolve os posts do nosso grupo do facebook, do ultimo dia, na nossa timeline especifica da API.
-	 *
-	 * @param currentDay
-	 * @param currentMounth
-	 * @param currentYear
-	 * 
-	 * @return posts
-	 *
-	 */
+	
+	 
 	public Object[][] getPostsOnThisDay(String currentDay, String currentMounth, String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -280,16 +249,6 @@ public class FacebookAPI {
 
 	
 	
-	/**
-	 * Devolve os posts do nosso grupo do facebook, da ultima semana, na nossa timeline especifica da API.
-	 * 
-	 * @param currentWeek
-	 * @param currentMounth
-	 * @param currentYear
-	 * 
-	 * @return posts
-	 *
-	 */
 	public Object[][] getPostsOnThisWeek(int currentWeek, String currentMounth, String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -333,15 +292,7 @@ public class FacebookAPI {
 	
 	
 	
-	/**
-	 * Devolve os posts do nosso grupo do facebook, do ultimo mês, na nossa timeline especifica da API.
-	 * 
-	 * @param currentMounth
-	 * @param currentYear
-	 * 
-	 * @return posts
-	 *
-	 */
+	
 	public Object[][] getPostsOnThisMounth(String currentMounth, String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -379,15 +330,7 @@ public class FacebookAPI {
 
 	
 
-	/**
-	 * Procura posts que contenham a palavra que o utilizador introduz no filtro de pesquisa.
-	 * 
-	 * @param word
-	 * 			palavra que o utilizador introduz.
-	 * 
-	 * @return posts
-	 *
-	 */
+	
 	public Object[][] searckWordInFacebook(String word) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -419,8 +362,13 @@ public class FacebookAPI {
 		return content;
 	}
 	
+	public String getAcessToken()	{
+		return extendedAccessToken;
+	}
+	
+	
 	public void post (String message){		
-		FacebookType response = fbClient.publish(groupID+"/feed", FacebookType.class, Parameter.with("message", message));
+		FacebookType response = fbClient.publish(el.getElementsByTagName("groupid").item(0).getTextContent()+"/feed", FacebookType.class, Parameter.with("message", message));
 		
 		System.out.println("novo post em fb.com/"+response.getId());
 	}

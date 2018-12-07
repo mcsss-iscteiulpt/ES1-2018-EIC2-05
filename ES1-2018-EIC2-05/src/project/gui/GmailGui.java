@@ -45,6 +45,8 @@ public class GmailGui  {
 		
 
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		
+		
 	}
 
 	/**

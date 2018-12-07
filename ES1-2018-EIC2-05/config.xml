@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<twitter>
+		<consumerkey>9R0h5yjbeJVmcrgslBdhBYZw1</consumerkey>
+		<consumersecret>GgtCoSHsQY4wEJmasj8GkBEmwoDcVYZJRV07FamfONcKVYEgDx</consumersecret>
+		<accesstoken>1051492546516570112-NBX08c31mPvjTfT3yUe5tNSc1neLUK</accesstoken>
+		<accesstokensecret>hNIpSQxitQPdt8qZDiwGfqn19iCZVkNcONBUWGB7yZvtv</accesstokensecret>
+	</twitter>
+	<email>
+		<username>es1.eic2.5@gmail.com</username>
+		<password>MiguelNeto15</password>
+	</email>
+	<facebook>
+		<appid>360660408005152</appid>
+		<groupid>1176283292538810</groupid>
+		<appsecret>2d0c83ae88e74968f5c93f905666dfc0</appsecret>
+		<accesstoken>EAAFIBMuA8iABAArep5j6oUJlBV0knAu4Lt5ZBX5S2BYSek70KTw43usBoIRrjnq8Jd3KVCY9zX69b4zKbPzLQiRh7SEkiYv1nu0oNgZCdCGVYZCzhbKjzdpNkhZAeli9zWi7gRiBu72hegnJ6AiRh644esze0aq2myxIyCDPyNfhZBBZCcMgT7</accesstoken>
+	</facebook>
+</config>
