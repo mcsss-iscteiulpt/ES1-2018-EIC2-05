@@ -1,15 +1,12 @@
 package project.facebook;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import com.restfb.FacebookClient;
 
-import project.twitter.TwitterHandler;
-import twitter4j.Twitter;
 
 
 class FacebookAPITest {

@@ -11,11 +11,9 @@ import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Store;
 
-import com.restfb.Connection;
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
+
 import com.restfb.types.Post;
-import com.restfb.types.User;
+
 
 import project.facebook.FacebookAPI;
 import project.mail.ReceiverOfMails;
