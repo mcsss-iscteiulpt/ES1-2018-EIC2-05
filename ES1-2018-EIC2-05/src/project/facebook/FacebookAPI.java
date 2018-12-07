@@ -4,20 +4,86 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Scanner;
 import java.util.TimeZone;
 
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
-import com.restfb.FacebookClient.AccessToken;
+import com.restfb.Parameter;
+import com.restfb.types.FacebookType;
 import com.restfb.types.Post;
 import com.restfb.types.User;
 
 public class FacebookAPI {
+	
+	/**
+	 * instance do Facebook Graph API client.
+	 * 
+	 */
+	private FacebookClient fbClient;
+	
+	/**
+	 * getter do Facebook Graph API client.
+	 * 
+	 */
+	public FacebookClient getFbClient() {
+		return fbClient;
+	}
 
-	private AccessToken extendedAccessToken;
+	/**
+	 * Graph API access token.
+	 * extended para extender a validade do token de 1h para 1 mes.
+	 * 
+	 */
+	private String extendedAccessToken;
+	
+	/**
+	 * instance do User Graph API.
+	 * 
+	 */
+	public User me;
+
+	/**
+	 * Codigo do Grupo BDA Facebook onde o utilizador vai postar e buscar posts.
+	 * 
+	 */
+	private String groupID ="1176283292538810";
+	
+	/**
+	 * ???
+	 */
 	private ArrayList<String>content=new ArrayList<String>();
+	
+	/**
+	 * Conexao e lista dos posts obtido atravÃ©s da conexao do cliente do facebook.
+	 * 
+	 */
+	public Connection<Post> result;
 
+	/**
+	 * Construtor da classe FacebookAPI:
+	 * cria a instance necessaria, atraves dos acess tokens para poder recolher informacoes e usar as funcionalidades do Facebook.
+	 *
+	 */
+	@SuppressWarnings("deprecation")
+	public FacebookAPI() {
+		
+		
+		extendedAccessToken = "EAAFIBMuA8iABAArep5j6oUJlBV0knAu4Lt5ZBX5S2BYSek70KTw43usBoIRrjnq8Jd3KVCY9zX69b4zKbPzLQiRh7SEkiYv1nu0oNgZCdCGVYZCzhbKjzdpNkhZAeli9zWi7gRiBu72hegnJ6AiRh644esze0aq2myxIyCDPyNfhZBBZCcMgT7";
+		fbClient = new DefaultFacebookClient(extendedAccessToken);
+		me = fbClient.fetchObject ("me", User.class);
+		
+		result = fbClient.fetchConnection(groupID+"/feed", Post.class);
+
+		
+	}
+
+	/**
+	 * Devolve os posts do nosso grupo do facebook, na nossa timeline geral da API.
+	 * @return posts
+	 *
+	 */
 	public Object[][] getPostsInGeneral() {
 
 		Object[][] data = { { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
@@ -33,51 +99,30 @@ public class FacebookAPI {
 				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" },
 				{ "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, { "", "", "", "", "" }, };
 
-//token tirado GRAPH API após criação da app BDA
-//token não tem todas as permissões - pode ser alterado no GRAPH API 
-
-		String accessToken = "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-		@SuppressWarnings("deprecation")
-		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-		User me = fbClient.fetchObject("me", User.class);
-
-//teste com o perfil recentemente criado		
-
-		System.out.println(me.getName());
-
-// App ID - 360660408005152
-// App secret - 2d0c83ae88e74968f5c93f905666dfc0
-
-//Extender o Access Token de 1h para 2 meses		
-		// Recolher os posts do utilizador numa lista e imprimi-los na consola
-		Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-		System.out.println("\nPosts:");
-		int counter = 0;
-		// int counterTotal = 0;
 		int i = 0;
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
-				// Filters only posts that contain the word "M"
-				// if (aPost.getMessage() != null && aPost.getMessage().contains("Mestrado")) {
-				System.out.println("---- Post " + counter + " ----");
-				System.out.println("Id: " + "www.facebook.com/" + aPost.getId());
-				System.out.println("Message: " + aPost.getMessage());
-				System.out.println("Created: " + aPost.getCreatedTime());
-				counter++;
+
+
 				data[i][0] = "Facebook";
-				data[i][1] = (convertTime(aPost.getCreatedTime().getTime()));
+				data[i][1] = (convertTime(aPost.getUpdatedTime().getTime()));
 				data[i][2] = "No title On Facebbok Posts";
 				data[i][3] = (aPost.getMessage());
-				data[i][4] = (aPost.getId());
+				data[i][4] = (me.getName());
 
 				i++;
 			}
-			// counterTotal++;
+
 		}
 		return data;
 
 	}
 
+	/**
+	 * Devolve os posts do nosso grupo do facebook, na nossa timeline especifica da API.
+	 * @return posts
+	 *
+	 */
 	public Object[][] getPostsOnTheApi() {
 
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -88,60 +133,56 @@ public class FacebookAPI {
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" } };
 
-//token tirado GRAPH API após criação da app BDA
-//token não tem todas as permissões - pode ser alterado no GRAPH API 
-
-		String accessToken = "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-		@SuppressWarnings("deprecation")
-		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-		User me = fbClient.fetchObject("me", User.class);
-
-//teste com o perfil recentemente criado		
-
-		System.out.println(me.getName());
-
-// App ID - 360660408005152
-// App secret - 2d0c83ae88e74968f5c93f905666dfc0
-
-//Extender o Access Token de 1h para 2 meses		
-		// Recolher os posts do utilizador numa lista e imprimi-los na consola
-		Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-		System.out.println("\nPosts:");
-		int counter = 0;
-		// int counterTotal = 0;
 		int i = 0;
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
-				// Filters only posts that contain the word "M"
-				// if (aPost.getMessage() != null && aPost.getMessage().contains("Mestrado")) {
-				System.out.println("---- Post " + counter + " ----");
-				System.out.println("Id: " + "www.facebook.com/" + aPost.getId());
-				System.out.println("Message: " + aPost.getMessage());
-				System.out.println("Created: " + aPost.getCreatedTime());
-				counter++;
-				data[i][0] = (convertTime(aPost.getCreatedTime().getTime()));
+				
+
+				data[i][0] = (convertTime(aPost.getUpdatedTime().getTime()));
 				data[i][1] = (aPost.getMessage());
-				data[i][2] = (aPost.getId());
+				data[i][2] = (me.getName());
 				
 				content.add(aPost.getMessage());
 
 				i++;
 			}
-			// counterTotal++;
+
 		}
 		return data;
 
 	}
 
+	/**
+	 * Converte o formato da hora dada pelo Facebook para o formato geral.
+	 * da aplicaÃ§Ã£o BDA
+	 * 
+	 * @param time
+	 * 			hora do post no formato original.
+	 * 
+	 * @return posts
+	 *
+	 */
 	public String convertTime(long time) {
 
 		SimpleDateFormat convert = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		convert.setTimeZone(TimeZone.getTimeZone("GMT"));
-		String tweetTime = convert.format(time);
+		String postTime = convert.format(time);
 
-		return tweetTime;
+		return postTime;
 	}
 
+	/**
+	 * Devolve os posts do nosso grupo do facebook, da ultima hora, na nossa timeline especifica da API.
+	 * 
+	 * @param currentHour
+	 * @param currentDay
+	 * @param currentMounth
+	 * @param currentYear
+	 * 
+	 * 
+	 * @return posts
+	 *
+	 */
 	public Object[][] getPostsOnThisHour(String currentHour, String currentDay, String currentMounth,
 			String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -152,40 +193,13 @@ public class FacebookAPI {
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" } };
 
-//token tirado GRAPH API após criação da app BDA
-//token não tem todas as permissões - pode ser alterado no GRAPH API 
 
-		String accessToken = "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-		@SuppressWarnings("deprecation")
-		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-		User me = fbClient.fetchObject("me", User.class);
-
-//teste com o perfil recentemente criado		
-
-		System.out.println(me.getName());
-
-// App ID - 360660408005152
-// App secret - 2d0c83ae88e74968f5c93f905666dfc0
-
-//Extender o Access Token de 1h para 2 meses		
-		// Recolher os posts do utilizador numa lista e imprimi-los na consola
-		Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-		System.out.println("\nPosts:");
-		int counter = 0;
-		// int counterTotal = 0;
 		int i = 0;
-
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
-				// Filters only posts that contain the word "M"
-				// if (aPost.getMessage() != null && aPost.getMessage().contains("Mestrado")) {
-				System.out.println("---- Post " + counter + " ----");
-				System.out.println("Id: " + "www.facebook.com/" + aPost.getId());
-				System.out.println("Message: " + aPost.getMessage());
-				System.out.println("Created: " + aPost.getCreatedTime());
-				counter++;
 
-				String timeAndDate = convertTime(aPost.getCreatedTime().getTime());
+
+				String timeAndDate = convertTime(aPost.getUpdatedTime().getTime());
 
 				String[] facebookSplitTimeAndDate = timeAndDate.split(" ");
 				String facebookActualData = facebookSplitTimeAndDate[0];
@@ -202,18 +216,29 @@ public class FacebookAPI {
 				if (currentHour.equals(facebookActualHour) && currentDay.equals(facebookActualDay)
 						&& currentMounth.equals(facebookActualMounth) && currentYear.equals(facebookActualYear)) {
 
-					data[i][0] = (convertTime(aPost.getCreatedTime().getTime()));
+					data[i][0] = (convertTime(aPost.getUpdatedTime().getTime()));
 					data[i][1] = (aPost.getMessage());
-					data[i][2] = (aPost.getId());
+					data[i][2] = (me.getName());
 				}
 				i++;
 
 			}
-			// counterTotal++;
+
 		}
 		return data;
 	}
 
+	
+	/**
+	 * Devolve os posts do nosso grupo do facebook, do ultimo dia, na nossa timeline especifica da API.
+	 *
+	 * @param currentDay
+	 * @param currentMounth
+	 * @param currentYear
+	 * 
+	 * @return posts
+	 *
+	 */
 	public Object[][] getPostsOnThisDay(String currentDay, String currentMounth, String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -223,40 +248,12 @@ public class FacebookAPI {
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" } };
 
-//token tirado GRAPH API após criação da app BDA
-//token não tem todas as permissões - pode ser alterado no GRAPH API 
-
-		String accessToken = "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-		@SuppressWarnings("deprecation")
-		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-		User me = fbClient.fetchObject("me", User.class);
-
-//teste com o perfil recentemente criado		
-
-		System.out.println(me.getName());
-
-// App ID - 360660408005152
-// App secret - 2d0c83ae88e74968f5c93f905666dfc0
-
-//Extender o Access Token de 1h para 2 meses		
-		// Recolher os posts do utilizador numa lista e imprimi-los na consola
-		Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-		System.out.println("\nPosts:");
-		int counter = 0;
-		// int counterTotal = 0;
 		int i = 0;
-
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
-				// Filters only posts that contain the word "M"
-				// if (aPost.getMessage() != null && aPost.getMessage().contains("Mestrado")) {
-				System.out.println("---- Post " + counter + " ----");
-				System.out.println("Id: " + "www.facebook.com/" + aPost.getId());
-				System.out.println("Message: " + aPost.getMessage());
-				System.out.println("Created: " + aPost.getCreatedTime());
-				counter++;
 
-				String timeAndDate = convertTime(aPost.getCreatedTime().getTime());
+
+				String timeAndDate = convertTime(aPost.getUpdatedTime().getTime());
 				String[] facebookSplitTimeAndDate = timeAndDate.split(" ");
 
 				String facebookActualData = facebookSplitTimeAndDate[0];
@@ -268,83 +265,30 @@ public class FacebookAPI {
 				if (currentDay.equals(facebookActualDay) && currentMounth.equals(facebookActualMounth)
 						&& currentYear.equals(facebookActualYear)) {
 
-					data[i][0] = (convertTime(aPost.getCreatedTime().getTime()));
+					data[i][0] = (convertTime(aPost.getUpdatedTime().getTime()));
 					data[i][1] = (aPost.getMessage());
-					data[i][2] = (aPost.getId());
+					data[i][2] = (me.getName());
 				}
 				i++;
 
 			}
-			// counterTotal++;
+
 		}
 		return data;
 	}
 
-	public Object[][] getPostsOnThisMounth(String currentMounth, String currentYear) {
-		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
-				{ "", "", "", "" }, { "", "", "", "" } };
-
-//token tirado GRAPH API após criação da app BDA
-//token não tem todas as permissões - pode ser alterado no GRAPH API 
-
-		String accessToken = "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-		@SuppressWarnings("deprecation")
-		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-		User me = fbClient.fetchObject("me", User.class);
-
-//teste com o perfil recentemente criado		
-
-		System.out.println(me.getName());
-
-// App ID - 360660408005152
-// App secret - 2d0c83ae88e74968f5c93f905666dfc0
-
-		setExtendedAccessToken(
-				fbClient.obtainExtendedAccessToken("360660408005152", "2d0c83ae88e74968f5c93f905666dfc0"));
-
-//Recolher os posts do utilizador numa lista e imprimi-los na consola 	
-		Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-		System.out.println("\nPosts:");
-		int counter = 0;
-		// int counterTotal = 0;
-		int i = 0;
-
-		for (List<Post> page : result) {
-			for (Post aPost : page) {
-				// Filters only posts that contain the word "M"
-				// if (aPost.getMessage() != null && aPost.getMessage().contains("Mestrado")) {
-				System.out.println("---- Post " + counter + " ----");
-				System.out.println("Id: " + "www.facebook.com/" + aPost.getId());
-				System.out.println("Message: " + aPost.getMessage());
-				System.out.println("Created: " + aPost.getCreatedTime());
-				counter++;
-
-				String timeAndDate = convertTime(aPost.getCreatedTime().getTime());
-				String[] facebookSplitTimeAndDate = timeAndDate.split(" ");
-				String facebookActualData = facebookSplitTimeAndDate[0];
-				String[] facebookActualSplitData = facebookActualData.split("/");
-				String facebookActualMounth = facebookActualSplitData[1];
-				String facebookActualYear = facebookActualSplitData[0];
-
-				if (currentMounth.equals(facebookActualMounth) && currentYear.equals(facebookActualYear)) {
-
-					data[i][0] = (convertTime(aPost.getCreatedTime().getTime()));
-					data[i][1] = (aPost.getMessage());
-					data[i][2] = (aPost.getId());
-				}
-				i++;
-
-			}
-			// counterTotal++;
-		}
-		return data;
-	}
-
+	
+	
+	/**
+	 * Devolve os posts do nosso grupo do facebook, da ultima semana, na nossa timeline especifica da API.
+	 * 
+	 * @param currentWeek
+	 * @param currentMounth
+	 * @param currentYear
+	 * 
+	 * @return posts
+	 *
+	 */
 	public Object[][] getPostsOnThisWeek(int currentWeek, String currentMounth, String currentYear) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -354,45 +298,16 @@ public class FacebookAPI {
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" } };
 
-//token tirado GRAPH API após criação da app BDA
-//token não tem todas as permissões - pode ser alterado no GRAPH API 
-
-		String accessToken = "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-		@SuppressWarnings("deprecation")
-		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-		User me = fbClient.fetchObject("me", User.class);
-
-//teste com o perfil recentemente criado		
-
-		System.out.println(me.getName());
-
-// App ID - 360660408005152
-// App secret - 2d0c83ae88e74968f5c93f905666dfc0
-
-//Extender o Access Token de 1h para 2 meses		
-		// Recolher os posts do utilizador numa lista e imprimi-los na consola
-		Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-		System.out.println("\nPosts:");
-		int counter = 0;
-		// int counterTotal = 0;
 		int i = 0;
-
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
-				// Filters only posts that contain the word "M"
-				// if (aPost.getMessage() != null && aPost.getMessage().contains("Mestrado")) {
-				System.out.println("---- Post " + counter + " ----");
-				System.out.println("Id: " + "www.facebook.com/" + aPost.getId());
-				System.out.println("Message: " + aPost.getMessage());
-				System.out.println("Created: " + aPost.getCreatedTime());
-				counter++;
 
-				java.util.Date date = aPost.getCreatedTime();
+				java.util.Date date = aPost.getUpdatedTime();
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(date);
 				int week = cal.get(Calendar.WEEK_OF_YEAR);
 
-				String timeAndDate = convertTime(aPost.getCreatedTime().getTime());
+				String timeAndDate = convertTime(aPost.getUpdatedTime().getTime());
 				String[] facebookSplitTimeAndDate = timeAndDate.split(" ");
 
 				String facebookActualData = facebookSplitTimeAndDate[0];
@@ -403,26 +318,75 @@ public class FacebookAPI {
 				if (currentWeek == week && currentMounth.equals(facebookActualMounth)
 						&& currentYear.equals(facebookActualYear)) {
 
-					data[i][0] = (convertTime(aPost.getCreatedTime().getTime()));
+					data[i][0] = (convertTime(aPost.getUpdatedTime().getTime()));
 					data[i][1] = (aPost.getMessage());
-					data[i][2] = (aPost.getId());
+					data[i][2] = (me.getName());
 				}
 				i++;
 
 			}
-			// counterTotal++;
+
+		}
+		return data;
+	}
+	
+	
+	
+	/**
+	 * Devolve os posts do nosso grupo do facebook, do ultimo mÃªs, na nossa timeline especifica da API.
+	 * 
+	 * @param currentMounth
+	 * @param currentYear
+	 * 
+	 * @return posts
+	 *
+	 */
+	public Object[][] getPostsOnThisMounth(String currentMounth, String currentYear) {
+		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
+				{ "", "", "", "" }, { "", "", "", "" } };
+
+		int i = 0;
+		for (List<Post> page : result) {
+			for (Post aPost : page) {
+				
+
+				String timeAndDate = convertTime(aPost.getUpdatedTime().getTime());
+				String[] facebookSplitTimeAndDate = timeAndDate.split(" ");
+				String facebookActualData = facebookSplitTimeAndDate[0];
+				String[] facebookActualSplitData = facebookActualData.split("/");
+				String facebookActualMounth = facebookActualSplitData[1];
+				String facebookActualYear = facebookActualSplitData[0];
+
+				if (currentMounth.equals(facebookActualMounth) && currentYear.equals(facebookActualYear)) {
+
+					data[i][0] = (convertTime(aPost.getUpdatedTime().getTime()));
+					data[i][1] = (aPost.getMessage());
+					data[i][2] = (me.getName());
+				}
+				i++;
+
+			}
+
 		}
 		return data;
 	}
 
-	public AccessToken getExtendedAccessToken() {
-		return extendedAccessToken;
-	}
+	
 
-	public void setExtendedAccessToken(AccessToken extendedAccessToken) {
-		this.extendedAccessToken = extendedAccessToken;
-	}
-
+	/**
+	 * Procura posts que contenham a palavra que o utilizador introduz no filtro de pesquisa.
+	 * 
+	 * @param word
+	 * 			palavra que o utilizador introduz.
+	 * 
+	 * @return posts
+	 *
+	 */
 	public Object[][] searckWordInFacebook(String word) {
 		Object[][] data = { { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
@@ -432,47 +396,19 @@ public class FacebookAPI {
 				{ "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" }, { "", "", "", "" },
 				{ "", "", "", "" }, { "", "", "", "" } };
 
-//token tirado GRAPH API após criação da app BDA
-//token não tem todas as permissões - pode ser alterado no GRAPH API 
-
-		String accessToken = "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-		@SuppressWarnings("deprecation")
-		FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-		User me = fbClient.fetchObject("me", User.class);
-
-//teste com o perfil recentemente criado		
-
-		System.out.println(me.getName());
-
-// App ID - 360660408005152
-// App secret - 2d0c83ae88e74968f5c93f905666dfc0
-
-//Extender o Access Token de 1h para 2 meses		
-		// Recolher os posts do utilizador numa lista e imprimi-los na consola
-		Connection<Post> result = fbClient.fetchConnection("me/feed", Post.class);
-		System.out.println("\nPosts:");
-		int counter = 0;
-		// int counterTotal = 0;
 		int i = 0;
 		for (List<Post> page : result) {
 			for (Post aPost : page) {
-
-				// Filters only posts that contain the word "M"
-				// if (aPost.getMessage() != null && aPost.getMessage().contains("Mestrado")) {
 				if (aPost.getMessage().contains(word)) {
-				System.out.println("---- Post " + counter + " ----");
-				System.out.println("Id: " + "www.facebook.com/" + aPost.getId());
-				System.out.println("Message: " + aPost.getMessage());
-				System.out.println("Created: " + aPost.getCreatedTime());
-				counter++;
-					data[i][0] = (convertTime(aPost.getCreatedTime().getTime()));
+
+					data[i][0] = (convertTime(aPost.getUpdatedTime().getTime()));
 					data[i][1] = (aPost.getMessage());
-					data[i][2] = (aPost.getId());
+					data[i][2] = (me.getName());
 
 					i++;
 				}
 			}
-			// counterTotal++;
+
 		}
 		return data;
 
@@ -481,26 +417,22 @@ public class FacebookAPI {
 	public ArrayList<String> getContent()	{
 		return content;
 	}
-//Page feed da página ISCTE - mas devido às novas politicas do Facebook só pode scessível com a review da nossa App.
+	
+	public void post (){
 
-	/***
-	 * String accessToken2 =
-	 * "EAAFIBMuA8iABAAC529ZCj8J1uZBtJDApAPJnTkV0ZAoJxPMZBoqDsi1MSLvLqZCuHCaCfP8QSTshavA8ZBoZBNOolXZAL3EQbKPjHg0xc6kotSWWQQESSkazA5XuEqElX91IiqU33o9BnzYXbzBjAXZCMfj1ipOe2SDuhMjYdWOvh923IfMZBZCaOIg";
-	 * FacebookClient fbClientPage = new DefaultFacebookClient(accessToken2); Page
-	 * page = fbClientPage.fetchObject("ISCTEIUL",Page.class); Connection<Post>
-	 * pageFeed = fbClientPage.fetchConnection(page.getId()+"/feed",Post.class); int
-	 * counterP = 0; int counterTotalP = 0; for (List<Post> postPage : pageFeed) {
-	 * for (Post aPost : postPage) {
-	 * 
-	 * // Posts da página do facebook - ISCTE"
-	 * 
-	 * System.out.println(aPost.getFrom().getName());
-	 * System.out.println("www.facebook.com/"+aPost.getId());
-	 * System.out.println("Message: "+aPost.getMessage());
-	 * System.out.println("Created: "+aPost.getCreatedTime()); counterP++;
-	 * 
-	 * counterTotalP++; } }
-	 * 
-	 ***/
-
+		
+		Scanner s = new Scanner(System.in);
+		
+		System.out.println("escreva o post: \n");
+		
+		String msg = s.nextLine();
+		
+		FacebookType response = fbClient.publish(groupID+"/feed", FacebookType.class, Parameter.with("message", msg));
+		
+		System.out.println("fb.com/"+response.getId());
+		
+		
+	}
+	
+	
 }
